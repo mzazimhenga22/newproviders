@@ -26,6 +26,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     .map((x) => x[2]);
 
   if (!servers[0]) throw new NotFoundError('No flixhq playlist found');
+  ctx.progress(60);
 
   return {
     embeds: [],

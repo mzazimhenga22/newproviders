@@ -19,6 +19,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   const fileDataMatch = playerPage.match(/"file": (\[.*?\])/s);
   if (!fileDataMatch[1]) throw new NotFoundError('No data found');
+  ctx.progress(50);
 
   const fileData: { title: string; file: string }[] = JSON.parse(fileDataMatch[1].replace(/,\s*\]$/, ']'));
 
@@ -29,6 +30,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     if (!url) continue;
     embeds.push({ embedId: `autoembed-${stream.title.toLowerCase().trim()}`, url });
   }
+  ctx.progress(90);
 
   return {
     embeds,

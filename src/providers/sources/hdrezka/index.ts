@@ -102,6 +102,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
   const { url: streamUrl, subtitle: streamSubtitle } = await getStream(result.id, translatorId, ctx);
   const parsedVideos = parseVideoLinks(streamUrl);
   const parsedSubtitles = parseSubtitleLinks(streamSubtitle);
+  ctx.progress(90);
 
   return {
     embeds: [],

@@ -26,6 +26,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext) => 
   });
   const targetMedia = mediaData.find((m) => m.name === ctx.media.title && m.year === ctx.media.releaseYear.toString());
   if (!targetMedia?.fullSlug) throw new NotFoundError('No watchable item found');
+  ctx.progress(40);
 
   let iframeSourceUrl = `/${targetMedia.fullSlug}/videos`;
 
@@ -51,6 +52,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext) => 
   const iframeSource$ = load(iframeSource.data[0].url);
   const iframeUrl = iframeSource$('iframe').attr('data-src');
   if (!iframeUrl) throw new NotFoundError('No watchable item found');
+  ctx.progress(60);
 
   const embeds: SourcererEmbed[] = [];
   if (iframeUrl.includes('closeload')) {
@@ -65,6 +67,8 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext) => 
       url: iframeUrl,
     });
   }
+  ctx.progress(90);
+
   return {
     embeds,
   };

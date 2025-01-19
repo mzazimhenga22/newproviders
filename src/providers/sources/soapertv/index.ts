@@ -57,6 +57,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
   const pass = contentPage$('#hId').attr('value');
 
   if (!pass) throw new NotFoundError('Content not found');
+  ctx.progress(50);
 
   const formData = new URLSearchParams();
   formData.append('pass', pass);
@@ -96,6 +97,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
       language,
     });
   }
+  ctx.progress(90);
 
   return {
     embeds: [],

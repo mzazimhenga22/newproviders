@@ -37,6 +37,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext) => 
   if (ctx.media.type === 'show') {
     videoUrl = `${show.url}/season/${ctx.media.season.number}/episode/${ctx.media.episode.number}`;
   }
+  ctx.progress(50);
 
   const videoPage = await ctx.proxiedFetcher<string>(videoUrl, {
     baseUrl: nepuBase,
@@ -55,6 +56,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext) => 
   const streamUrl = playerPage.match(/"file":"([^"]+)"/);
 
   if (!streamUrl?.[1]) throw new NotFoundError('No stream found.');
+  ctx.progress(90);
 
   return {
     embeds: [],

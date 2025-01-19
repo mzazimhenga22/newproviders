@@ -57,6 +57,7 @@ export const warezcdnScraper = makeSourcerer({
 
     const [, id, servers] = serversPage.match(/let\s+data\s*=\s*'\[\s*\{\s*"id":"([^"]+)".*?"servers":"([^"]+)"/)!;
     if (!id || !servers) throw new NotFoundError('Failed to find episode id');
+    ctx.progress(40);
 
     return getEmbeds(id, servers, ctx);
   },
@@ -67,6 +68,7 @@ export const warezcdnScraper = makeSourcerer({
 
     const seasonsApi = serversPage.match(/var\s+cachedSeasons\s*=\s*"([^"]+)"/)?.[1];
     if (!seasonsApi) throw new NotFoundError('Failed to find data');
+    ctx.progress(40);
 
     const streamsData = await ctx.proxiedFetcher<cachedSeasonsRes>(seasonsApi, {
       baseUrl: warezcdnBase,
