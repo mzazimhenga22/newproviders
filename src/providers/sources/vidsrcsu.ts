@@ -17,7 +17,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   let playlist;
   // we only want flixhq which is server 1 and server 2
   servers.forEach((server) => {
-    if (['Server 1', 'Server 2'].includes(server.label) && server.url) playlist = server.url;
+    if (['Server 1', 'Server 2', 'Server 3'].includes(server.label) && server.url) playlist = server.url;
   });
   if (!playlist) throw new NotFoundError('No flixhq playlist found');
   const captionsDataMatch = embedPage.match(/const subtitles = +(\[.*?\])/s);
