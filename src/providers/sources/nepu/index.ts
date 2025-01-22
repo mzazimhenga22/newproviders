@@ -24,7 +24,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext) => 
   const show = searchResult.data.find((item) => {
     if (!item) return false;
     if (ctx.media.type === 'movie' && item.type !== 'Movie') return false;
-    if (ctx.media.type === 'show' && item.type !== 'Serie') return false;
+    if (ctx.media.type === 'show' && item.type !== 'Show') return false;
 
     const [, title, year] = item.name.match(/^(.*?)\s*(?:\(?\s*(\d{4})(?:\s*-\s*\d{0,4})?\s*\)?)?\s*$/) || [];
     return compareMedia(ctx.media, title, Number(year));
