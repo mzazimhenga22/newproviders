@@ -77,25 +77,27 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
   const streamResJson: InfoResponse = JSON.parse(streamRes);
 
   const captions: Caption[] = [];
-  for (const sub of streamResJson.subs) {
-    // Some subtitles are named <Language>.srt, some are named <LanguageCode>:hi, or just <LanguageCode>
-    let language: string | null = '';
-    if (sub.name.includes('.srt')) {
-      language = labelToLanguageCode(sub.name.split('.srt')[0]);
-    } else if (sub.name.includes(':')) {
-      language = sub.name.split(':')[0];
-    } else {
-      language = sub.name;
-    }
-    if (!language) continue;
+  if (Array.isArray(streamResJson.subs)) {
+    for (const sub of streamResJson.subs) {
+      // Some subtitles are named <Language>.srt, some are named <LanguageCode>:hi, or just <LanguageCode>
+      let language: string | null = '';
+      if (sub.name.includes('.srt')) {
+        language = labelToLanguageCode(sub.name.split('.srt')[0]);
+      } else if (sub.name.includes(':')) {
+        language = sub.name.split(':')[0];
+      } else {
+        language = sub.name;
+      }
+      if (!language) continue;
 
-    captions.push({
-      id: sub.path,
-      url: `${baseUrl}${sub.path}`,
-      type: 'srt',
-      hasCorsRestrictions: false,
-      language,
-    });
+      captions.push({
+        id: sub.path,
+        url: `${baseUrl}${sub.path}`,
+        type: 'srt',
+        hasCorsRestrictions: false,
+        language,
+      });
+    }
   }
   ctx.progress(90);
 
