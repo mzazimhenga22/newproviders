@@ -67,7 +67,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const catflixScraper = makeSourcerer({
   id: 'catflix',
   name: 'Catflix',
-  rank: 170,
+  rank: 165,
   disabled: true,
   flags: [],
   scrapeMovie: comboScraper,
