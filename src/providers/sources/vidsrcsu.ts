@@ -7,15 +7,19 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   const embedPage = await ctx.proxiedFetcher(
     `https://vidsrc.su/embed/${ctx.media.type === 'movie' ? `movie/${ctx.media.tmdbId}` : `tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`}`,
   );
-  const servers = [...embedPage.matchAll(/label: 'Server \d+', url: '(https.*)'/g)] // match all server URLs
-    .map((x) => x[1]);
+  const serverMatches = [...embedPage.matchAll(/label: 'Server (\d+)', url: '(https.*)'/g)];
+
+  const servers = serverMatches.map((match) => ({
+    serverNumber: parseInt(match[1], 10),
+    url: match[2],
+  }));
   ctx.progress(60);
 
   if (!servers.length) throw new NotFoundError('No server playlist found');
 
-  const embeds: SourcererEmbed[] = servers.map((url, index) => ({
-    embedId: `server-${index + 1}`,
-    url,
+  const embeds: SourcererEmbed[] = servers.map((server) => ({
+    embedId: `server-${server.serverNumber}`,
+    url: server.url,
   }));
   ctx.progress(90);
 
