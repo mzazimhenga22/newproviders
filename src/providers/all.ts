@@ -59,6 +59,19 @@ import { streamtapeScraper } from './embeds/streamtape';
 import { streamvidScraper } from './embeds/streamvid';
 import { vidCloudScraper } from './embeds/vidcloud';
 import { vidplayScraper } from './embeds/vidplay';
+import {
+  VidsrcsuServer10Scraper,
+  VidsrcsuServer11Scraper,
+  VidsrcsuServer1Scraper,
+  VidsrcsuServer2Scraper,
+  VidsrcsuServer3Scraper,
+  VidsrcsuServer4Scraper,
+  VidsrcsuServer5Scraper,
+  VidsrcsuServer6Scraper,
+  VidsrcsuServer7Scraper,
+  VidsrcsuServer8Scraper,
+  VidsrcsuServer9Scraper,
+} from './embeds/vidsrcsu';
 import { voeScraper } from './embeds/voe';
 import { warezcdnembedHlsScraper } from './embeds/warezcdn/hls';
 import { warezcdnembedMp4Scraper } from './embeds/warezcdn/mp4';
@@ -162,5 +175,16 @@ export function gatherAllEmbeds(): Array<Embed> {
     streamwishScraper,
     mp4hydraServer1Scraper,
     mp4hydraServer2Scraper,
+    VidsrcsuServer1Scraper,
+    VidsrcsuServer2Scraper,
+    VidsrcsuServer3Scraper,
+    VidsrcsuServer4Scraper,
+    VidsrcsuServer5Scraper,
+    VidsrcsuServer6Scraper,
+    VidsrcsuServer7Scraper,
+    VidsrcsuServer8Scraper,
+    VidsrcsuServer9Scraper,
+    VidsrcsuServer10Scraper,
+    VidsrcsuServer11Scraper,
   ];
 }
