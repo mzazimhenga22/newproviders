@@ -3,6 +3,10 @@ import { makeEmbed } from '@/providers/base';
 
 const providers = [
   {
+    id: 'server-12',
+    rank: 112,
+  },
+  {
     id: 'server-7',
     rank: 102,
   },
@@ -85,4 +89,5 @@ export const [
   VidsrcsuServer9Scraper,
   VidsrcsuServer10Scraper,
   VidsrcsuServer11Scraper,
+  VidsrcsuServer12Scraper,
 ] = providers.map(embed);

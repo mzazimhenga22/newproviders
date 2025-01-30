@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { SourcererEmbed, SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
@@ -7,12 +8,26 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   const embedPage = await ctx.proxiedFetcher(
     `https://vidsrc.su/embed/${ctx.media.type === 'movie' ? `movie/${ctx.media.tmdbId}` : `tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`}`,
   );
+
+  const decodedPeterMatch = embedPage.match(/decodeURIComponent\('([^']+)'\)/);
+  const decodedPeterUrl = decodedPeterMatch ? decodeURIComponent(decodedPeterMatch[1]) : null;
+
   const serverMatches = [...embedPage.matchAll(/label: 'Server (\d+)', url: '(https.*)'/g)];
 
   const servers = serverMatches.map((match) => ({
     serverNumber: parseInt(match[1], 10),
     url: match[2],
   }));
+
+  if (decodedPeterUrl) {
+    servers.push({
+      serverNumber: 12,
+      url: decodedPeterUrl,
+    });
+  }
+
+  console.log(servers);
+
   ctx.progress(60);
 
   if (!servers.length) throw new NotFoundError('No server playlist found');
@@ -29,7 +44,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 }
 export const vidsrcsuScraper = makeSourcerer({
   id: 'vidsrcsu',
-  name: 'vidsrc.su (FlixHQ)',
+  name: 'vidsrc.su',
   rank: 140,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,

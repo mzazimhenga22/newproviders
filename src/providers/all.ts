@@ -62,6 +62,7 @@ import { vidplayScraper } from './embeds/vidplay';
 import {
   VidsrcsuServer10Scraper,
   VidsrcsuServer11Scraper,
+  VidsrcsuServer12Scraper,
   VidsrcsuServer1Scraper,
   VidsrcsuServer2Scraper,
   VidsrcsuServer3Scraper,
@@ -189,6 +190,7 @@ export function gatherAllEmbeds(): Array<Embed> {
     VidsrcsuServer9Scraper,
     VidsrcsuServer10Scraper,
     VidsrcsuServer11Scraper,
+    VidsrcsuServer12Scraper,
     webtor4kScraper,
     webtor1080Scraper,
     webtor720Scraper,
