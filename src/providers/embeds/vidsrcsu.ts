@@ -3,47 +3,47 @@ import { makeEmbed } from '@/providers/base';
 
 const providers = [
   {
-    id: 'server-1',
+    id: 'server-7',
     rank: 102,
   },
   {
-    id: 'server-2',
+    id: 'server-11',
     rank: 92,
   },
   {
-    id: 'server-3',
+    id: 'server-10',
     rank: 82,
   },
   {
-    id: 'server-4',
+    id: 'server-1',
     rank: 72,
   },
   {
-    id: 'server-5',
+    id: 'server-3',
     rank: 62,
   },
   {
-    id: 'server-6',
+    id: 'server-2',
     rank: 52,
   },
   {
-    id: 'server-7',
+    id: 'server-4',
     rank: 42,
   },
   {
-    id: 'server-8',
+    id: 'server-5',
     rank: 32,
   },
   {
-    id: 'server-9',
+    id: 'server-6',
     rank: 22,
   },
   {
-    id: 'server-10',
+    id: 'server-8',
     rank: 12,
   },
   {
-    id: 'server-11',
+    id: 'server-9',
     rank: 2,
   },
 ];
