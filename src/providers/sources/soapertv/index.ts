@@ -34,7 +34,7 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
     searchResults.push({ title, year: year ? parseInt(year, 10) : undefined, url });
   });
 
-  const showLink = searchResults.find((x) => x && compareMedia(ctx.media, x.title, x.year))?.url;
+  let showLink = searchResults.find((x) => x && compareMedia(ctx.media, x.title, x.year))?.url;
   if (!showLink) throw new NotFoundError('Content not found');
 
   if (ctx.media.type === 'show') {
