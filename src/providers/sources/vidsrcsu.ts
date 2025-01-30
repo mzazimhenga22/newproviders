@@ -35,33 +35,3 @@ export const vidsrcsuScraper = makeSourcerer({
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
 });
-
-// Just to get the flixhq playlist (Server 1, 2, and 3)
-
-// async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
-//   const embedPage = await ctx.proxiedFetcher(
-//     `https://vidsrc.su/embed/${ctx.media.type === 'movie' ? `movie/${ctx.media.tmdbId}` : `tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`}`,
-//   );
-
-//   const servers = [...embedPage.matchAll(/label: 'Server (1|2|3)', url: '(https.*)'/g)] // only server 1,2 and 3 are flixhq
-//     .sort((a, b) => {
-//       // ranking for servers
-//       const ranks: Record<string, number> = { '1': 10, '2': 30, '3': 20 }; // server 2 > 3 > 1
-//       return ranks[b[1]] - ranks[a[1]];
-//     })
-//     .map((x) => x[2]);
-
-//   if (!servers[0]) throw new NotFoundError('No flixhq playlist found');
-//   ctx.progress(60);
-
-// return {
-//   embeds: [],
-//   stream: [
-//     {
-//       id: 'primary',
-//       playlist: servers[0],
-//       type: 'hls',
-//       flags: [flags.CORS_ALLOWED],
-//       captions: [],
-//   })),
-// };
