@@ -8,10 +8,19 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     `https://vidsrc.su/embed/${ctx.media.type === 'movie' ? `movie/${ctx.media.tmdbId}` : `tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`}`,
   );
 
-  const servers = [...embedPage.matchAll(/label: 'Server (1|2|3)', url: '(https.*)'/g)] // only server 1,2 and 3 are flixhq
+  const servers = [...embedPage.matchAll(/label: 'Server (1|2|3|5|7|8|10|11)', url: '(https.*)'/g)] // only server 1,2 and 3 are flixhq
     .sort((a, b) => {
       // ranking for servers
-      const ranks: Record<string, number> = { '1': 10, '2': 30, '3': 20 }; // server 2 > 3 > 1
+      const ranks: Record<string, number> = {
+        '7': 10,
+        '11': 20,
+        '10': 30,
+        '1': 40,
+        '3': 50,
+        '2': 60,
+        '5': 70,
+        '8': 80,
+      }; // server 8 > 5 > 2 ...
       return ranks[b[1]] - ranks[a[1]];
     })
     .map((x) => x[2]);
