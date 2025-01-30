@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { flags } from '@/entrypoint/utils/targets';
 import { Caption, labelToLanguageCode } from '@/providers/captions';
 import { Stream } from '@/providers/streams';
+import { compareMedia } from '@/utils/compare';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 import { convertPlaylistsToDataUrls } from '@/utils/playlist';
@@ -19,10 +20,21 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
       keyword: ctx.media.title,
     },
   });
-  const searchResult$ = load(searchResult);
-  let showLink = searchResult$('a')
-    .filter((_, el) => searchResult$(el).text() === ctx.media.title)
-    .attr('href');
+  const search$ = load(searchResult);
+
+  const searchResults: { title: string; year?: number | undefined; url: string }[] = [];
+
+  search$('.thumbnail').each((_, element) => {
+    const title = search$(element).find('h5').find('a').first().text().trim();
+    const year = search$(element).find('.img-tip').first().text().trim();
+    const url = search$(element).find('h5').find('a').first().attr('href');
+
+    if (!title || !url) return;
+
+    searchResults.push({ title, year: year ? parseInt(year, 10) : undefined, url });
+  });
+
+  const showLink = searchResults.find((x) => x && compareMedia(ctx.media, x.title, x.year))?.url;
   if (!showLink) throw new NotFoundError('Content not found');
 
   if (ctx.media.type === 'show') {
