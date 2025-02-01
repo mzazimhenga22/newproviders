@@ -20,7 +20,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   if (decodedPeterUrl) {
     servers.push({
-      serverNumber: 12,
+      serverNumber: 20,
       url: decodedPeterUrl,
     });
   }
