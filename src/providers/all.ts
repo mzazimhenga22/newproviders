@@ -91,6 +91,7 @@ import { primewireScraper } from './sources/primewire';
 import { ridooMoviesScraper } from './sources/ridomovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { soaperTvScraper } from './sources/soapertv';
+import { vidlinkScraper } from './sources/vidlink';
 import { vidSrcToScraper } from './sources/vidsrcto';
 import { warezcdnScraper } from './sources/warezcdn';
 import { webtorScraper } from './sources/webtor';
@@ -132,6 +133,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     mp4hydraScraper,
     webtorScraper,
     embedsuScraper,
+    vidlinkScraper,
   ];
 }
 
