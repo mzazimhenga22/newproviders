@@ -74,12 +74,14 @@ import {
   VidsrcsuServer8Scraper,
   VidsrcsuServer9Scraper,
 } from './embeds/vidsrcsu';
+import { viperScraper } from './embeds/viper';
 import { voeScraper } from './embeds/voe';
 import { warezcdnembedHlsScraper } from './embeds/warezcdn/hls';
 import { warezcdnembedMp4Scraper } from './embeds/warezcdn/mp4';
 import { warezPlayerScraper } from './embeds/warezcdn/warezplayer';
 import { webtor1080Scraper, webtor480Scraper, webtor4kScraper, webtor720Scraper } from './embeds/webtor';
 import { wootlyScraper } from './embeds/wootly';
+import { embedsuScraper } from './sources/embedsu';
 import { goojaraScraper } from './sources/goojara';
 import { hdRezkaScraper } from './sources/hdrezka';
 import { m4uScraper } from './sources/m4ufree';
@@ -129,6 +131,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     TASFScraper,
     mp4hydraScraper,
     webtorScraper,
+    embedsuScraper,
   ];
 }
 
@@ -197,5 +200,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     webtor1080Scraper,
     webtor720Scraper,
     webtor480Scraper,
+    viperScraper,
   ];
 }
