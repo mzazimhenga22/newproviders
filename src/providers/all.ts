@@ -82,6 +82,7 @@ import { warezPlayerScraper } from './embeds/warezcdn/warezplayer';
 import { webtor1080Scraper, webtor480Scraper, webtor4kScraper, webtor720Scraper } from './embeds/webtor';
 import { wootlyScraper } from './embeds/wootly';
 import { embedsuScraper } from './sources/embedsu';
+import { FedAPIScraper } from './sources/fedapi';
 import { goojaraScraper } from './sources/goojara';
 import { hdRezkaScraper } from './sources/hdrezka';
 import { m4uScraper } from './sources/m4ufree';
@@ -134,6 +135,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     webtorScraper,
     embedsuScraper,
     vidlinkScraper,
+    FedAPIScraper,
   ];
 }
 
