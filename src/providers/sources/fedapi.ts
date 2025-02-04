@@ -6,7 +6,7 @@ import { NotFoundError } from '@/utils/errors';
 import { Caption } from '../captions';
 
 // Thanks Nemo, Custom, and Roomba for this API
-const BASE_URL = 'https://febapi.bludclart.com';
+const BASE_URL = 'https://fed-api-production.up.railway.app';
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
   const apiUrl =
@@ -15,6 +15,9 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       : `${BASE_URL}/tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`;
 
   const data = await ctx.fetcher(apiUrl);
+  if (data?.error === 'No quality list in FebBox response') {
+    throw new NotFoundError('No stream found');
+  }
   if (!data) throw new NotFoundError('No response from API');
   ctx.progress(50);
 
