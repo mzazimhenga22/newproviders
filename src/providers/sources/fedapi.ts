@@ -6,7 +6,7 @@ import { NotFoundError } from '@/utils/errors';
 import { Caption } from '../captions';
 
 // Thanks Nemo, Custom, and Roomba for this API
-const BASE_URL = 'https://fed-api-production.up.railway.app';
+const BASE_URL = 'https://febapi.bludclart.com';
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
   const apiUrl =
