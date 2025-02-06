@@ -3,7 +3,7 @@ import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
-import { Caption } from '../captions';
+// import { Caption } from '../captions';
 
 // Thanks Nemo, Custom, and Roomba for this API
 const BASE_URL = 'https://febapi.bludclart.com';
@@ -35,21 +35,21 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     return acc;
   }, {});
 
-  const captions: Caption[] = [];
-  for (const [lang, subs] of Object.entries(data.subtitles)) {
-    const language = lang.replace(' Subtitles', '');
-    for (const sub of subs as any[]) {
-      const url = sub['Subtitle Link'];
-      const isVtt = url.toLowerCase().endsWith('.vtt');
-      captions.push({
-        type: isVtt ? 'vtt' : 'srt',
-        id: sub['Subtitle Link'],
-        url: sub['Subtitle Link'],
-        language,
-        hasCorsRestrictions: false,
-      });
-    }
-  }
+  // const captions: Caption[] = [];
+  // for (const [lang, subs] of Object.entries(data.subtitles)) {
+  //   const language = lang.replace(' Subtitles', '');
+  //   for (const sub of subs as any[]) {
+  //     const url = sub['Subtitle Link'];
+  //     const isVtt = url.toLowerCase().endsWith('.vtt');
+  //     captions.push({
+  //       type: isVtt ? 'vtt' : 'srt',
+  //       id: sub['Subtitle Link'],
+  //       url: sub['Subtitle Link'],
+  //       language,
+  //       hasCorsRestrictions: false,
+  //     });
+  //   }
+  // }
 
   ctx.progress(90);
 
@@ -58,7 +58,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     stream: [
       {
         id: 'primary',
-        captions,
+        captions: [],
         qualities: {
           ...(streams[2160] && {
             '4k': {
@@ -101,7 +101,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const FedAPIScraper = makeSourcerer({
   id: 'fedapi',
   name: 'FED API',
-  rank: 230,
+  rank: 129,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
