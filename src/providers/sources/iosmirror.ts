@@ -5,6 +5,8 @@ import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { makeCookieHeader } from '@/utils/cookie';
 import { NotFoundError } from '@/utils/errors';
 
+// thanks @TPN for this
+
 const baseUrl = 'https://iosmirror.cc';
 const baseUrl2 = 'https://vercelhlsproxy-nn5c.vercel.app/iosmirror.cc:443';
 
