@@ -85,6 +85,7 @@ import { embedsuScraper } from './sources/embedsu';
 import { FedAPIScraper } from './sources/fedapi';
 import { goojaraScraper } from './sources/goojara';
 import { hdRezkaScraper } from './sources/hdrezka';
+import { iosmirrorScraper } from './sources/iosmirror';
 import { m4uScraper } from './sources/m4ufree';
 import { nepuScraper } from './sources/nepu';
 import { nitesScraper } from './sources/nites';
@@ -136,6 +137,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     embedsuScraper,
     vidlinkScraper,
     FedAPIScraper,
+    iosmirrorScraper,
   ];
 }
 
