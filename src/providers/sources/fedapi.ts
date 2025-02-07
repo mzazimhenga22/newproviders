@@ -101,7 +101,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const FedAPIScraper = makeSourcerer({
   id: 'fedapi',
   name: 'FED API',
-  rank: 129,
+  rank: 230,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
