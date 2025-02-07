@@ -3,10 +3,33 @@ import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
-// import { Caption } from '../captions';
+import { Caption } from '../captions';
 
 // Thanks Nemo, Custom, and Roomba for this API
 const BASE_URL = 'https://febapi.bludclart.com';
+
+// this is so fucking useless
+const languageMap: Record<string, string> = {
+  English: 'en',
+  Spanish: 'es',
+  French: 'fr',
+  German: 'de',
+  Italian: 'it',
+  Portuguese: 'pt',
+  Arabic: 'ar',
+  Russian: 'ru',
+  Japanese: 'ja',
+  Korean: 'ko',
+  Chinese: 'zh',
+  Hindi: 'hi',
+  Turkish: 'tr',
+  Dutch: 'nl',
+  Polish: 'pl',
+  Swedish: 'sv',
+  Indonesian: 'id',
+  Thai: 'th',
+  Vietnamese: 'vi',
+};
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
   const apiUrl =
@@ -35,21 +58,23 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     return acc;
   }, {});
 
-  // const captions: Caption[] = [];
-  // for (const [lang, subs] of Object.entries(data.subtitles)) {
-  //   const language = lang.replace(' Subtitles', '');
-  //   for (const sub of subs as any[]) {
-  //     const url = sub['Subtitle Link'];
-  //     const isVtt = url.toLowerCase().endsWith('.vtt');
-  //     captions.push({
-  //       type: isVtt ? 'vtt' : 'srt',
-  //       id: sub['Subtitle Link'],
-  //       url: sub['Subtitle Link'],
-  //       language,
-  //       hasCorsRestrictions: false,
-  //     });
-  //   }
-  // }
+  const captions: Caption[] = [];
+  for (const [langKey, subs] of Object.entries(data.subtitles)) {
+    const languageName = langKey.replace(' Subtitles', '');
+    const languageCode = languageMap[languageName]?.toLowerCase() || 'unknown';
+
+    for (const sub of subs as any[]) {
+      const url = sub['Subtitle Link'];
+      const isVtt = url.toLowerCase().endsWith('.vtt');
+      captions.push({
+        type: isVtt ? 'vtt' : 'srt',
+        id: url,
+        url,
+        language: languageCode,
+        hasCorsRestrictions: false,
+      });
+    }
+  }
 
   ctx.progress(90);
 
@@ -58,7 +83,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     stream: [
       {
         id: 'primary',
-        captions: [],
+        captions,
         qualities: {
           ...(streams[2160] && {
             '4k': {
