@@ -65,6 +65,7 @@ export const embedsuScraper = makeSourcerer({
   id: 'embedsu',
   name: 'embed.su',
   rank: 229,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
