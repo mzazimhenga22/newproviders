@@ -3,6 +3,14 @@ import { makeEmbed } from '@/providers/base';
 
 const providers = [
   {
+    id: 'server-13',
+    rank: 112,
+  },
+  {
+    id: 'server-18',
+    rank: 111,
+  },
+  {
     id: 'server-7',
     rank: 102,
   },
@@ -19,42 +27,62 @@ const providers = [
     rank: 72,
   },
   {
+    id: 'server-16',
+    rank: 64,
+  },
+  {
     id: 'server-3',
     rank: 62,
   },
   {
-    id: 'server-2',
+    id: 'server-17',
     rank: 52,
   },
   {
-    id: 'server-4',
+    id: 'server-2',
     rank: 42,
   },
   {
-    id: 'server-5',
+    id: 'server-4',
     rank: 32,
   },
   {
-    id: 'server-6',
+    id: 'server-5',
+    rank: 24,
+  },
+  {
+    id: 'server-14', // catflix? uwu.m3u8
     rank: 22,
   },
   {
+    id: 'server-6',
+    rank: 21,
+  },
+  {
+    id: 'server-15',
+    rank: 20,
+  },
+  {
     id: 'server-8',
-    rank: 12,
+    rank: 19,
   },
   {
     id: 'server-9',
-    rank: 6,
+    rank: 18,
+  },
+  {
+    id: 'server-19',
+    rank: 17,
   },
   {
     id: 'server-12',
-    rank: 3,
+    rank: 16,
   },
-  {
-    id: 'server-20',
-    rank: 1,
-    name: 'Cineby',
-  },
+  // { // Looks like this was removed
+  //   id: 'server-20',
+  //   rank: 1,
+  //   name: 'Cineby',
+  // },
 ];
 
 function embed(provider: { id: string; rank: number; name?: string; disabled?: boolean }) {

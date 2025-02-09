@@ -20,7 +20,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   if (decodedPeterUrl) {
     servers.push({
-      serverNumber: 20,
+      serverNumber: 40,
       url: decodedPeterUrl,
     });
   }
@@ -42,7 +42,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const vidsrcsuScraper = makeSourcerer({
   id: 'vidsrcsu',
   name: 'vidsrc.su',
-  rank: 130,
+  rank: 140,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
