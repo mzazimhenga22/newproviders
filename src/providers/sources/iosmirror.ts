@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { compareTitle } from '@/utils/compare';
@@ -26,7 +27,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
   const searchRes = await ctx.proxiedFetcher<searchT>('/search.php', {
     baseUrl: baseUrl2,
     query: { s: ctx.media.title },
-    headers: { cookie: makeCookieHeader({ t_hash_t: hash }) },
+    headers: { cookie: makeCookieHeader({ t_hash_t: hash, hd: 'on' }) },
   });
   if (searchRes.status !== 'y' || !searchRes.searchResult) throw new NotFoundError(searchRes.error);
 
@@ -34,7 +35,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
     return ctx.proxiedFetcher<metaT>('/post.php', {
       baseUrl: baseUrl2,
       query: { id },
-      headers: { cookie: makeCookieHeader({ t_hash_t: hash }) },
+      headers: { cookie: makeCookieHeader({ t_hash_t: hash, hd: 'on' }) },
     });
   }
 
@@ -60,7 +61,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
     const episodeRes = await ctx.proxiedFetcher<episodeT>('/episodes.php', {
       baseUrl: baseUrl2,
       query: { s: seasonId, series: id },
-      headers: { cookie: makeCookieHeader({ t_hash_t: hash }) },
+      headers: { cookie: makeCookieHeader({ t_hash_t: hash, hd: 'on' }) },
     });
 
     let episodes = [...episodeRes.episodes];
@@ -69,7 +70,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
       const nextPageRes = await ctx.proxiedFetcher<episodeT>('/episodes.php', {
         baseUrl: baseUrl2,
         query: { s: seasonId, series: id, page: currentPage.toString() },
-        headers: { cookie: makeCookieHeader({ t_hash_t: hash }) },
+        headers: { cookie: makeCookieHeader({ t_hash_t: hash, hd: 'on' }) },
       });
 
       episodes = [...episodes, ...nextPageRes.episodes];
@@ -85,15 +86,24 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
     id = episodeId;
   }
 
-  const playlistRes: { sources: { file: string }[] }[] = await ctx.proxiedFetcher('/playlist.php?', {
+  const playlistRes: { sources: { file: string; label: string }[] }[] = await ctx.proxiedFetcher('/playlist.php?', {
     baseUrl: baseUrl2,
     query: { id },
-    headers: { cookie: makeCookieHeader({ t_hash_t: hash }) },
+    headers: { cookie: makeCookieHeader({ t_hash_t: hash, hd: 'on' }) },
   });
 
-  if (!playlistRes[0].sources[0].file) throw new Error('Failed to fetch playlist'); // todo: make a find func to get the one with lable auto
+  let autoFile = playlistRes[0].sources.find((source) => source.label === 'Auto')?.file;
+  if (!autoFile) {
+    autoFile = playlistRes[0].sources.find((source) => source.label === 'Full HD')?.file;
+  }
+  if (!autoFile) {
+    console.log('"Full HD" or "Auto" file not found, falling back to first source');
+    autoFile = playlistRes[0].sources[0].file;
+  }
 
-  const playlist = `https://vercelhlsproxy-nn5c.vercel.app/m3u8-proxy?url=${encodeURIComponent(`${baseUrl}${playlistRes[0].sources[0].file}`)}&headers=${encodeURIComponent(JSON.stringify({ referer: baseUrl }))}`;
+  if (!autoFile) throw new Error('Failed to fetch playlist');
+
+  const playlist = `https://vercelhlsproxy-nn5c.vercel.app/m3u8-proxy?url=${encodeURIComponent(`${baseUrl}${autoFile}`)}&headers=${encodeURIComponent(JSON.stringify({ referer: baseUrl }))}`;
 
   return {
     embeds: [],
