@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
@@ -5,8 +6,8 @@ import { NotFoundError } from '@/utils/errors';
 
 import { Caption } from '../captions';
 
-// Thanks Nemo, Custom, and Roomba for this API
-const BASE_URL = 'https://febapi.bludclart.com';
+// Thanks Nemo for this API, and Custom for hosting!
+const BASE_URL = 'https://fed-api.up.railway.app';
 
 // this is so fucking useless
 const languageMap: Record<string, string> = {
@@ -31,20 +32,45 @@ const languageMap: Record<string, string> = {
   Vietnamese: 'vi',
 };
 
+const getUserToken = (): string | null => {
+  try {
+    return typeof window !== 'undefined' ? window.localStorage.getItem('febbox_ui_token') : null;
+  } catch (e) {
+    console.warn('Unable to access localStorage:', e);
+    return null;
+  }
+};
+
+interface StreamData {
+  streams: Record<string, string>;
+  subtitles: Record<string, Array<{ name: string; url: string }>>;
+  error?: string;
+}
+
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
   const apiUrl =
     ctx.media.type === 'movie'
-      ? `${BASE_URL}/movie/${ctx.media.tmdbId}`
+      ? `${BASE_URL}/movie/${ctx.media.imdbId}`
       : `${BASE_URL}/tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`;
 
-  const data = await ctx.fetcher(apiUrl);
+  const userToken = getUserToken();
+  if (userToken) {
+    console.log('Custom token found:');
+  }
+
+  const data = await ctx.fetcher<StreamData>(apiUrl, {
+    headers: {
+      ...(userToken && { 'ui-token': userToken }),
+    },
+  });
+
   if (data?.error === 'No quality list in FebBox response') {
     throw new NotFoundError('No stream found');
   }
   if (!data) throw new NotFoundError('No response from API');
   ctx.progress(50);
 
-  const streams = Object.entries(data.streams.qualities).reduce((acc: Record<string, string>, [quality, url]) => {
+  const streams = Object.entries(data.streams).reduce((acc: Record<string, string>, [quality, url]) => {
     let qualityKey: number;
     if (quality === '4K') {
       qualityKey = 2160;
@@ -54,17 +80,19 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       qualityKey = parseInt(quality.replace('P', ''), 10);
     }
     if (Number.isNaN(qualityKey) || acc[qualityKey]) return acc;
-    acc[qualityKey] = url as string;
+    acc[qualityKey] = url;
     return acc;
   }, {});
 
   const captions: Caption[] = [];
   for (const [langKey, subs] of Object.entries(data.subtitles)) {
-    const languageName = langKey.replace(' Subtitles', '');
-    const languageCode = languageMap[languageName]?.toLowerCase() || 'unknown';
+    // Extract language name from key ("english_subtitles" -> "English")
+    const languageKeyPart = langKey.split('_')[0];
+    const languageName = languageKeyPart.charAt(0).toUpperCase() + languageKeyPart.slice(1);
+    const languageCode = languageMap[languageName]?.toLowerCase() ?? 'unknown';
 
-    for (const sub of subs as any[]) {
-      const url = sub['Subtitle Link'];
+    for (const sub of subs) {
+      const url = sub.url;
       const isVtt = url.toLowerCase().endsWith('.vtt');
       captions.push({
         type: isVtt ? 'vtt' : 'srt',
@@ -126,7 +154,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const FedAPIScraper = makeSourcerer({
   id: 'fedapi',
   name: 'FED API (4K)',
-  rank: 140,
+  rank: getUserToken() ? 240 : 140,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
