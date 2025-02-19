@@ -91,6 +91,7 @@ import { nepuScraper } from './sources/nepu';
 import { nitesScraper } from './sources/nites';
 import { primewireScraper } from './sources/primewire';
 import { ridooMoviesScraper } from './sources/ridomovies';
+import { slidemoviesScraper } from './sources/slidemovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { soaperTvScraper } from './sources/soapertv';
 import { vidlinkScraper } from './sources/vidlink';
@@ -138,6 +139,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     vidlinkScraper,
     FedAPIScraper,
     iosmirrorScraper,
+    slidemoviesScraper,
   ];
 }
 
