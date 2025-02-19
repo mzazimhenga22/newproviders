@@ -11,11 +11,11 @@ const providers = [
     rank: 111,
   },
   {
-    id: 'server-7',
+    id: 'server-11',
     rank: 102,
   },
   {
-    id: 'server-11',
+    id: 'server-7',
     rank: 92,
   },
   {
