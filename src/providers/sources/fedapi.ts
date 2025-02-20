@@ -64,7 +64,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     },
   });
 
-  if (data?.error === 'No quality list in FebBox response') {
+  if (data?.error === 'No results found in MovieBox search') {
     throw new NotFoundError('No stream found');
   }
   if (!data) throw new NotFoundError('No response from API');
