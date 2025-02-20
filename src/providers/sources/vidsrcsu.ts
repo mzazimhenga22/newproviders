@@ -3,10 +3,22 @@ import { SourcererEmbed, SourcererOutput, makeSourcerer } from '@/providers/base
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
+const getHost = () => {
+  const urlObj = new URL(window.location.href);
+  return `${urlObj.protocol}//${urlObj.host}`;
+};
+
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
-  const embedPage = await ctx.fetcher(
+  const embedPage = await ctx.proxiedFetcher(
     `https://vidsrc.su/embed/${ctx.media.type === 'movie' ? `movie/${ctx.media.tmdbId}` : `tv/${ctx.media.tmdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`}`,
+    {
+      headers: {
+        Referer: getHost(),
+      },
+    },
   );
+  // eslint-disable-next-line no-console
+  console.log('host', getHost());
 
   const decodedPeterMatch = embedPage.match(/decodeURIComponent\('([^']+)'\)/);
   const decodedPeterUrl = decodedPeterMatch ? decodeURIComponent(decodedPeterMatch[1]) : null;
