@@ -13,16 +13,19 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       ? `${baseUrl}/movie/${ctx.media.tmdbId}`
       : `${baseUrl}/tv/${ctx.media.tmdbId}/${ctx.media.season.number}/-${ctx.media.episode.number}`;
 
-  ctx.progress(60);
-
   const watchPage = await ctx.proxiedFetcher(watchPageUrl);
   const $ = load(watchPage);
+  ctx.progress(50);
 
   const proxiedStreamUrl = $('media-player').attr('src');
 
   if (!proxiedStreamUrl) {
     throw new NotFoundError('Stream URL not found');
   }
+
+  const proxyUrl = new URL(proxiedStreamUrl);
+  const encodedUrl = proxyUrl.searchParams.get('url') || '';
+  const playlist = decodeURIComponent(encodedUrl);
 
   const isoLanguageMap: Record<string, string> = {
     ng: 'en',
@@ -56,7 +59,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
         id: 'primary',
         type: 'hls',
         flags: [],
-        playlist: proxiedStreamUrl,
+        playlist,
         captions,
       },
     ],
