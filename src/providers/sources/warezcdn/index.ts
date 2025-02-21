@@ -61,40 +61,40 @@ export const warezcdnScraper = makeSourcerer({
 
     return getEmbeds(id, servers, ctx);
   },
-  scrapeShow: async (ctx) => {
-    if (!ctx.media.imdbId) throw new NotFoundError('This source requires IMDB id.');
-    const url = `${warezcdnBase}/serie/${ctx.media.imdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`;
-    const serversPage = await ctx.proxiedFetcher<string>(url);
+  // scrapeShow: async (ctx) => {
+  //   if (!ctx.media.imdbId) throw new NotFoundError('This source requires IMDB id.');
+  //   const url = `${warezcdnBase}/serie/${ctx.media.imdbId}/${ctx.media.season.number}/${ctx.media.episode.number}`;
+  //   const serversPage = await ctx.proxiedFetcher<string>(url);
 
-    const seasonsApi = serversPage.match(/var\s+cachedSeasons\s*=\s*"([^"]+)"/)?.[1];
-    if (!seasonsApi) throw new NotFoundError('Failed to find data');
-    ctx.progress(40);
+  //   const seasonsApi = serversPage.match(/var\s+cachedSeasons\s*=\s*"([^"]+)"/)?.[1];
+  //   if (!seasonsApi) throw new NotFoundError('Failed to find data');
+  //   ctx.progress(40);
 
-    const streamsData = await ctx.proxiedFetcher<cachedSeasonsRes>(seasonsApi, {
-      baseUrl: warezcdnBase,
-      headers: {
-        Referer: url,
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-    });
+  //   const streamsData = await ctx.proxiedFetcher<cachedSeasonsRes>(seasonsApi, {
+  //     baseUrl: warezcdnBase,
+  //     headers: {
+  //       Referer: url,
+  //       'X-Requested-With': 'XMLHttpRequest',
+  //     },
+  //   });
 
-    const season = Object.values(streamsData.seasons).find((s) => s.name === ctx.media.season.number.toString());
-    if (!season) throw new NotFoundError('Failed to find season id');
-    const episode = Object.values(season.episodes).find((e) => e.name === ctx.media.season.number.toString())?.id;
-    if (!episode) throw new NotFoundError('Failed to find episode id');
+  //   const season = Object.values(streamsData.seasons).find((s) => s.name === ctx.media.season.number.toString());
+  //   if (!season) throw new NotFoundError('Failed to find season id');
+  //   const episode = Object.values(season.episodes).find((e) => e.name === ctx.media.season.number.toString())?.id;
+  //   if (!episode) throw new NotFoundError('Failed to find episode id');
 
-    const episodeData = await ctx.proxiedFetcher<string>('/core/ajax.php', {
-      baseUrl: warezcdnBase,
-      headers: {
-        Referer: url,
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      query: { audios: episode },
-    });
+  //   const episodeData = await ctx.proxiedFetcher<string>('/core/ajax.php', {
+  //     baseUrl: warezcdnBase,
+  //     headers: {
+  //       Referer: url,
+  //       'X-Requested-With': 'XMLHttpRequest',
+  //     },
+  //     query: { audios: episode },
+  //   });
 
-    const [, id, servers] = episodeData.replace(/\\"/g, '"').match(/"\[\s*\{\s*"id":"([^"]+)".*?"servers":"([^"]+)"/)!;
-    if (!id || !servers) throw new NotFoundError('Failed to find episode id');
+  //   const [, id, servers] = episodeData.replace(/\\"/g, '"').match(/"\[\s*\{\s*"id":"([^"]+)".*?"servers":"([^"]+)"/)!;
+  //   if (!id || !servers) throw new NotFoundError('Failed to find episode id');
 
-    return getEmbeds(id, servers, ctx);
-  },
+  //   return getEmbeds(id, servers, ctx);
+  // },
 });
