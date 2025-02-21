@@ -21,6 +21,9 @@ type searchT = { searchResult?: { id: string; t: string; y: string }[]; error: s
 
 type episodeT = { episodes: { id: string; s: string; ep: string }[]; nextPageShow: number };
 
+const userAgent = navigator.userAgent.toLowerCase();
+const isIos = /iphone|ipad|ipod/.test(userAgent);
+
 const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> => {
   const hash = decodeURIComponent(await ctx.proxiedFetcher('https://iosmirror-hash.pstream.org/'));
   ctx.progress(10);
@@ -125,6 +128,7 @@ export const iosmirrorPVScraper = makeSourcerer({
   id: 'iosmirrorpv',
   name: 'PrimeMirror',
   rank: 183,
+  disabled: !!isIos,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
   scrapeShow: universalScraper,

@@ -21,6 +21,9 @@ type searchT = { status: 'y' | 'n'; searchResult?: { id: string; t: string }[]; 
 
 type episodeT = { episodes: { id: string; s: string; ep: string }[]; nextPageShow: number };
 
+const userAgent = navigator.userAgent.toLowerCase();
+const isIos = /iphone|ipad|ipod/.test(userAgent);
+
 const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> => {
   const hash = decodeURIComponent(await ctx.proxiedFetcher('https://iosmirror-hash.pstream.org/'));
   ctx.progress(10);
@@ -128,7 +131,7 @@ export const iosmirrorScraper = makeSourcerer({
   id: 'iosmirror',
   name: 'NetMirror',
   rank: 182,
-  disabled: false,
+  disabled: !!isIos,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: universalScraper,
   scrapeShow: universalScraper,
