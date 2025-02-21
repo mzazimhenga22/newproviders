@@ -3,6 +3,7 @@ import { makeEmbed } from '@/providers/base';
 export const warezPlayerScraper = makeEmbed({
   id: 'warezplayer',
   name: 'warezPLAYER',
+  disabled: true,
   rank: 85,
   async scrape(ctx) {
     // ex url: https://basseqwevewcewcewecwcw.xyz/video/0e4a2c65bdaddd66a53422d93daebe68
