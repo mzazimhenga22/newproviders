@@ -57,6 +57,18 @@ import { smashyStreamOScraper } from './embeds/smashystream/opstream';
 import { smashyStreamFScraper } from './embeds/smashystream/video1';
 import { streamtapeScraper } from './embeds/streamtape';
 import { streamvidScraper } from './embeds/streamvid';
+import {
+  uiraFlixhqScraper,
+  uiraGhostScraper,
+  uiraGuruScraper,
+  uiraHydraxScraper,
+  uiraMegaScraper,
+  uiraNinjaScraper,
+  uiraOrionScraper,
+  uiraRabbitScraper,
+  uiraVidapiScraper,
+  uiraVidsrcvipScraper,
+} from './embeds/uiralive';
 import { vidCloudScraper } from './embeds/vidcloud';
 import { vidplayScraper } from './embeds/vidplay';
 import {
@@ -95,6 +107,7 @@ import { ridooMoviesScraper } from './sources/ridomovies';
 import { slidemoviesScraper } from './sources/slidemovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { soaperTvScraper } from './sources/soapertv';
+import { uiraliveScraper } from './sources/uiralive';
 import { vidlinkScraper } from './sources/vidlink';
 import { vidSrcToScraper } from './sources/vidsrcto';
 import { warezcdnScraper } from './sources/warezcdn';
@@ -142,6 +155,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     slidemoviesScraper,
     iosmirrorScraper,
     iosmirrorPVScraper,
+    uiraliveScraper,
   ];
 }
 
@@ -211,5 +225,15 @@ export function gatherAllEmbeds(): Array<Embed> {
     webtor720Scraper,
     webtor480Scraper,
     viperScraper,
+    uiraMegaScraper,
+    uiraOrionScraper,
+    uiraRabbitScraper,
+    uiraNinjaScraper,
+    uiraGuruScraper,
+    uiraVidsrcvipScraper,
+    uiraVidapiScraper,
+    uiraFlixhqScraper,
+    uiraGhostScraper,
+    uiraHydraxScraper,
   ];
 }
