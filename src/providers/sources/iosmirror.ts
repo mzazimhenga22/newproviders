@@ -9,7 +9,7 @@ import { NotFoundError } from '@/utils/errors';
 // See how to set this up yourself: https://gist.github.com/Pasithea0/9ba31d16580800e899c245a4379e902b
 
 const baseUrl = 'https://iosmirror.cc';
-const baseUrl2 = 'https://m3u8-proxy.pstream.org/iosmirror.cc:443';
+const baseUrl2 = 'https://vercel-sucks.up.railway.app/iosmirror.cc:443';
 
 type metaT = {
   year: string;
@@ -25,7 +25,8 @@ const userAgent = navigator.userAgent.toLowerCase();
 const isIos = /iphone|ipad|ipod/.test(userAgent);
 
 const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> => {
-  const hash = decodeURIComponent(await ctx.proxiedFetcher('https://iosmirror-hash.pstream.org/'));
+  const hash = decodeURIComponent(await ctx.fetcher('https://iosmirror-hash.pstream.org/'));
+  if (!hash) throw new NotFoundError('No hash found');
   ctx.progress(10);
 
   const searchRes = await ctx.proxiedFetcher<searchT>('/search.php', {
@@ -110,7 +111,7 @@ const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Pr
 
   if (!autoFile) throw new Error('Failed to fetch playlist');
 
-  const playlist = `https://m3u8-proxy.pstream.org/m3u8-proxy?url=${encodeURIComponent(`${baseUrl}${autoFile}`)}&headers=${encodeURIComponent(JSON.stringify({ referer: baseUrl, cookie: makeCookieHeader({ hd: 'on' }) }))}`;
+  const playlist = `https://vercel-sucks.up.railway.app/m3u8-proxy?url=${encodeURIComponent(`${baseUrl}${autoFile}`)}&headers=${encodeURIComponent(JSON.stringify({ referer: baseUrl, cookie: makeCookieHeader({ hd: 'on' }) }))}`;
   ctx.progress(90);
 
   return {
