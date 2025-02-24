@@ -13,14 +13,12 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     }`,
   );
 
-  if (!result?.sources?.length) {
-    throw new NotFoundError('No sources found');
-  }
-
   const embeds: SourcererEmbed[] = result.sources.map((source: { source: any; url: any }) => ({
     embedId: `uira-${source.source}`,
     url: source.url,
   }));
+
+  if (embeds.length === 0) throw new NotFoundError('No sources found');
 
   ctx.progress(90);
 
