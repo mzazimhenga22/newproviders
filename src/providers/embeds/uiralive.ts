@@ -4,38 +4,26 @@ import { makeEmbed } from '@/providers/base';
 const providers = [
   {
     id: 'uira-slidemovies',
-    rank: 314,
+    rank: 320,
   },
   {
     id: 'uira-mega',
-    rank: 313,
-  },
-  {
-    id: 'uira-shadow',
-    rank: 312,
-  },
-  {
-    id: 'uira-orion',
-    rank: 311,
-  },
-  {
-    id: 'uira-rabbit',
     rank: 310,
   },
   {
-    id: 'uira-ninja',
+    id: 'uira-orion',
     rank: 309,
   },
   {
-    id: 'uira-ninja1',
+    id: 'uira-rabbit',
     rank: 308,
   },
   {
-    id: 'uira-guru',
+    id: 'uira-ninja',
     rank: 307,
   },
   {
-    id: 'uira-fastx',
+    id: 'uira-guru',
     rank: 306,
   },
   {
@@ -104,21 +92,14 @@ function embed(provider: { id: string; rank: number; name?: string; disabled?: b
 }
 
 export const [
-  uiraSlidemoviesScraper,
   uiraMegaScraper,
-  uiraShadowScraper,
   uiraOrionScraper,
   uiraRabbitScraper,
   uiraNinjaScraper,
-  uiraNinja1Scraper,
   uiraGuruScraper,
-  uiraFastxScraper,
   uiraVidsrcvipScraper,
   uiraVidapiScraper,
   uiraFlixhqScraper,
   uiraGhostScraper,
   uiraHydraxScraper,
-  uiraG1Scraper,
-  uiraG2Scraper,
-  uiraSoapertvScraper,
 ] = providers.map(embed);
