@@ -3,6 +3,10 @@ import { makeEmbed } from '@/providers/base';
 
 const providers = [
   {
+    id: 'uira-slidemovies',
+    rank: 320,
+  },
+  {
     id: 'uira-mega',
     rank: 310,
   },
