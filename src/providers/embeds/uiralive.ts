@@ -3,27 +3,19 @@ import { makeEmbed } from '@/providers/base';
 
 const providers = [
   {
-    id: 'uira-slidemovies',
-    rank: 320,
-  },
-  {
-    id: 'uira-mega',
-    rank: 310,
-  },
-  {
-    id: 'uira-orion',
+    id: 'uira-catflix',
     rank: 309,
   },
   {
-    id: 'uira-rabbit',
+    id: 'uira-mega',
     rank: 308,
   },
   {
-    id: 'uira-ninja',
+    id: 'uira-rabbit',
     rank: 307,
   },
   {
-    id: 'uira-guru',
+    id: 'uira-orion',
     rank: 306,
   },
   {
@@ -31,36 +23,20 @@ const providers = [
     rank: 305,
   },
   {
-    id: 'uira-vidapi',
+    id: 'uira-flixhq',
     rank: 304,
   },
   {
-    id: 'uira-flixhq',
+    id: 'uira-slidemovies',
     rank: 303,
   },
   {
-    id: 'uira-ghost',
+    id: 'uira-vidapi',
     rank: 302,
   },
   {
-    id: 'uira-hydrax',
-    rank: 301,
-  },
-  {
-    id: 'uira-g1',
-    rank: 300,
-  },
-  {
-    id: 'uira-g2',
-    rank: 299,
-  },
-  {
-    id: 'uira-soapertv',
-    rank: 298,
-  },
-  {
     id: 'uira-flicky',
-    rank: 297,
+    rank: 301,
   },
 ];
 
@@ -92,14 +68,13 @@ function embed(provider: { id: string; rank: number; name?: string; disabled?: b
 }
 
 export const [
+  uiraCatflixScraper,
   uiraMegaScraper,
-  uiraOrionScraper,
   uiraRabbitScraper,
-  uiraNinjaScraper,
-  uiraGuruScraper,
+  uiraOrionScraper,
   uiraVidsrcvipScraper,
-  uiraVidapiScraper,
   uiraFlixhqScraper,
-  uiraGhostScraper,
-  uiraHydraxScraper,
+  uiraSlidemoviesScraper,
+  uiraVidapiScraper,
+  uiraFlickyScraper,
 ] = providers.map(embed);
