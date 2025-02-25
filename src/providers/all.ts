@@ -57,17 +57,6 @@ import { smashyStreamOScraper } from './embeds/smashystream/opstream';
 import { smashyStreamFScraper } from './embeds/smashystream/video1';
 import { streamtapeScraper } from './embeds/streamtape';
 import { streamvidScraper } from './embeds/streamvid';
-import {
-  uiraCatflixScraper,
-  uiraFlickyScraper,
-  uiraFlixhqScraper,
-  uiraMegaScraper,
-  uiraOrionScraper,
-  uiraRabbitScraper,
-  uiraSlidemoviesScraper,
-  uiraVidapiScraper,
-  uiraVidsrcvipScraper,
-} from './embeds/uiralive';
 import { vidCloudScraper } from './embeds/vidcloud';
 import { vidplayScraper } from './embeds/vidplay';
 import {
@@ -224,14 +213,5 @@ export function gatherAllEmbeds(): Array<Embed> {
     webtor720Scraper,
     webtor480Scraper,
     viperScraper,
-    uiraCatflixScraper,
-    uiraMegaScraper,
-    uiraRabbitScraper,
-    uiraOrionScraper,
-    uiraVidsrcvipScraper,
-    uiraFlixhqScraper,
-    uiraSlidemoviesScraper,
-    uiraVidapiScraper,
-    uiraFlickyScraper,
   ];
 }

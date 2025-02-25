@@ -1,5 +1,5 @@
 import { flags } from '@/entrypoint/utils/targets';
-import { SourcererEmbed, SourcererOutput, makeSourcerer } from '@/providers/base';
+import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
@@ -13,7 +13,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   let result = await ctx.fetcher(fetchUrl);
 
-  if (!result?.sources?.length) {
+  if (!result?.sources || result.sources.length === 0) {
     try {
       result = await ctx.fetcher(fetchUrl);
     } catch (e: any) {
@@ -22,17 +22,21 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     }
   }
 
-  if (!result?.sources?.length) throw new NotFoundError('No sources found');
-
-  const embeds: SourcererEmbed[] = result.sources.map((source: { source: any; url: any }) => ({
-    embedId: `uira-${source.source}`,
-    url: source.url,
-  }));
+  if (!result?.sources || result.sources.length === 0) throw new NotFoundError('No sources found');
 
   ctx.progress(90);
 
   return {
-    embeds,
+    embeds: [],
+    stream: [
+      {
+        id: 'primary',
+        playlist: result.sources[0].url,
+        type: 'hls',
+        flags: [flags.CORS_ALLOWED],
+        captions: [],
+      },
+    ],
   };
 }
 
