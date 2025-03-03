@@ -12,6 +12,7 @@ const providers = [
     id: 'mp4hydra-2',
     name: 'Server 2',
     rank: 35,
+    disabled: true,
   },
 ];
 
