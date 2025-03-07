@@ -7,7 +7,6 @@ import { NotFoundError } from '@/utils/errors';
 const apiUrl = 'https://tom.autoembed.cc';
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
-  // Construct the API endpoint similar to the working example
   const mediaType = ctx.media.type === 'show' ? 'tv' : 'movie';
   let id = ctx.media.tmdbId;
 
