@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { SourcererEmbed, SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
@@ -24,6 +25,8 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       Referer: apiUrl,
     },
   });
+
+  console.log(data);
 
   if (!data) throw new NotFoundError('Failed to fetch video source');
   if (!data.videoSource) throw new NotFoundError('No video source found');

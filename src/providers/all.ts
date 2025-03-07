@@ -97,6 +97,7 @@ import { slidemoviesScraper } from './sources/slidemovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { soaperTvScraper } from './sources/soapertv';
 import { uiraliveScraper } from './sources/uiralive';
+import { vidapiClickScraper } from './sources/vidapiclick';
 import { vidlinkScraper } from './sources/vidlink';
 import { vidSrcToScraper } from './sources/vidsrcto';
 import { warezcdnScraper } from './sources/warezcdn';
@@ -146,6 +147,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     iosmirrorScraper,
     iosmirrorPVScraper,
     uiraliveScraper,
+    vidapiClickScraper,
   ];
 }
 
