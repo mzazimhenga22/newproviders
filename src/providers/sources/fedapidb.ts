@@ -32,6 +32,15 @@ const languageMap: Record<string, string> = {
   Vietnamese: 'vi',
 };
 
+const getUserToken = (): string | null => {
+  try {
+    return typeof window !== 'undefined' ? window.localStorage.getItem('febbox_ui_token') : null;
+  } catch (e) {
+    console.warn('Unable to access localStorage:', e);
+    return null;
+  }
+};
+
 interface StreamData {
   streams: Record<string, string>;
   subtitles: Record<string, Array<{ name: string; url: string }>>;
@@ -137,7 +146,7 @@ export const FedAPIDBScraper = makeSourcerer({
   id: 'fedapidb',
   name: 'FED DB (Beta)',
   rank: 259,
-  disabled: false,
+  disabled: !!getUserToken(),
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
