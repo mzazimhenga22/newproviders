@@ -94,6 +94,7 @@ import { nepuScraper } from './sources/nepu';
 import { nitesScraper } from './sources/nites';
 import { primewireScraper } from './sources/primewire';
 import { ridooMoviesScraper } from './sources/ridomovies';
+import { roverScraper } from './sources/rover';
 import { slidemoviesScraper } from './sources/slidemovies';
 import { smashyStreamScraper } from './sources/smashystream';
 import { soaperTvScraper } from './sources/soapertv';
@@ -150,6 +151,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     uiraliveScraper,
     vidapiClickScraper,
     coitusScraper,
+    roverScraper,
   ];
 }
 
