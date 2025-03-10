@@ -21,8 +21,8 @@ type searchT = { status: 'y' | 'n'; searchResult?: { id: string; t: string }[]; 
 
 type episodeT = { episodes: { id: string; s: string; ep: string }[]; nextPageShow: number };
 
-const userAgent = navigator.userAgent.toLowerCase();
-const isIos = /iphone|ipad|ipod/.test(userAgent);
+// const userAgent = navigator.userAgent.toLowerCase();
+// const isIos = /iphone|ipad|ipod/.test(userAgent);
 
 const universalScraper = async (ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> => {
   const hash = decodeURIComponent(await ctx.fetcher('https://iosmirror-hash.pstream.org/'));

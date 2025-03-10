@@ -7,7 +7,7 @@ import { ScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
 import { warezcdnBase } from './common';
-import { cachedSeasonsRes } from './types';
+// import { cachedSeasonsRes } from './types';
 
 async function getEmbeds(id: string, servers: string, ctx: ScrapeContext): Promise<SourcererOutput> {
   const embeds: SourcererEmbed[] = [];
