@@ -85,22 +85,24 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   }, {});
 
   const captions: Caption[] = [];
-  for (const [langKey, subs] of Object.entries(data.subtitles)) {
-    // Extract language name from key ("english_subtitles" -> "English")
-    const languageKeyPart = langKey.split('_')[0];
-    const languageName = languageKeyPart.charAt(0).toUpperCase() + languageKeyPart.slice(1);
-    const languageCode = languageMap[languageName]?.toLowerCase() ?? 'unknown';
+  if (data.subtitles) {
+    for (const [langKey, subs] of Object.entries(data.subtitles)) {
+      // Extract language name from key ("english_subtitles" -> "English")
+      const languageKeyPart = langKey.split('_')[0];
+      const languageName = languageKeyPart.charAt(0).toUpperCase() + languageKeyPart.slice(1);
+      const languageCode = languageMap[languageName]?.toLowerCase() ?? 'unknown';
 
-    for (const sub of subs) {
-      const url = sub.url;
-      const isVtt = url.toLowerCase().endsWith('.vtt');
-      captions.push({
-        type: isVtt ? 'vtt' : 'srt',
-        id: url,
-        url,
-        language: languageCode,
-        hasCorsRestrictions: false,
-      });
+      for (const sub of subs) {
+        const url = sub.url;
+        const isVtt = url.toLowerCase().endsWith('.vtt');
+        captions.push({
+          type: isVtt ? 'vtt' : 'srt',
+          id: url,
+          url,
+          language: languageCode,
+          hasCorsRestrictions: false,
+        });
+      }
     }
   }
 
