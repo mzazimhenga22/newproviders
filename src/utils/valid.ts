@@ -12,6 +12,7 @@ const SKIP_VALIDATION_CHECK_IDS = [
   // novaScraper.id,
   // astraScraper.id,
   // orionScraper.id,
+  uiraliveScraper.id,
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
