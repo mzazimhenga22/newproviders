@@ -15,7 +15,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   try {
     result = await ctx.fetcher(fetchUrl);
   } catch (e: any) {
-    if (e instanceof NotFoundError) throw new NotFoundError(`uiralive: ${e.message}`);
+    if (e instanceof NotFoundError) throw new NotFoundError(`${e.message}`);
     throw e;
   }
 
@@ -23,19 +23,19 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     try {
       result = await ctx.fetcher(fetchUrl);
     } catch (e: any) {
-      if (e instanceof NotFoundError) throw new NotFoundError(`uiralive: ${e.message}`);
+      if (e instanceof NotFoundError) throw new NotFoundError(`${e.message}`);
       throw e;
     }
   }
 
   if (!result || !result.sources || result.sources.length === 0) {
-    throw new NotFoundError('uiralive: No sources found');
+    throw new NotFoundError('No sources found');
   }
 
   ctx.progress(90);
 
   if (!result.sources[0].url) {
-    throw new Error('uiralive: Source URL is missing');
+    throw new Error('Source URL is missing');
   }
 
   return {
@@ -47,7 +47,6 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
         type: 'hls',
         flags: [flags.CORS_ALLOWED],
         captions: result.captions || [],
-        proxyDepth: 0,
       },
     ],
   };
