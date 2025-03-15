@@ -1,6 +1,7 @@
 // import { alphaScraper, deltaScraper } from '@/providers/embeds/nsbx';
 // import { astraScraper, novaScraper, orionScraper } from '@/providers/embeds/whvx';
 import { warezcdnembedMp4Scraper } from '@/providers/embeds/warezcdn/mp4';
+import { uiraliveScraper } from '@/providers/sources/uiralive';
 import { Stream } from '@/providers/streams';
 import { IndividualEmbedRunnerOptions } from '@/runners/individualRunner';
 import { ProviderRunnerOptions } from '@/runners/runner';
