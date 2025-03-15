@@ -6,7 +6,7 @@ import { NotFoundError } from '@/utils/errors';
 
 import { Caption } from '../captions';
 
-// Thanks Nemo for this API, and Custom for hosting!
+// Thanks Nemo for this API!
 const BASE_URL = 'https://fed-api.pstream.org';
 
 // this is so fucking useless
@@ -43,8 +43,10 @@ const getUserToken = (): string | null => {
 
 interface StreamData {
   streams: Record<string, string>;
-  subtitles: Record<string, Array<{ name: string; url: string }>>;
+  subtitles: Record<string, any>;
   error?: string;
+  name?: string;
+  size?: string;
 }
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
@@ -86,14 +88,15 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   const captions: Caption[] = [];
   if (data.subtitles) {
-    for (const [langKey, subs] of Object.entries(data.subtitles)) {
-      // Extract language name from key ("english_subtitles" -> "English")
+    for (const [langKey, subtitleData] of Object.entries(data.subtitles)) {
+      // Extract language name from key
       const languageKeyPart = langKey.split('_')[0];
       const languageName = languageKeyPart.charAt(0).toUpperCase() + languageKeyPart.slice(1);
       const languageCode = languageMap[languageName]?.toLowerCase() ?? 'unknown';
 
-      for (const sub of subs) {
-        const url = sub.url;
+      // Check if the subtitle data is in the new format (has subtitle_link)
+      if (subtitleData.subtitle_link) {
+        const url = subtitleData.subtitle_link;
         const isVtt = url.toLowerCase().endsWith('.vtt');
         captions.push({
           type: isVtt ? 'vtt' : 'srt',
