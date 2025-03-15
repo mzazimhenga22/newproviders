@@ -47,7 +47,6 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
         type: 'hls',
         flags: [flags.CORS_ALLOWED],
         captions: result.captions || [],
-        preferredHeaders: {},
       },
     ],
   };
