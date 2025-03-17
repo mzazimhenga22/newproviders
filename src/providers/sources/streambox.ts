@@ -87,7 +87,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const streamboxScraper = makeSourcerer({
   id: 'streambox',
   name: 'StreamBox',
-  rank: 231,
+  rank: 155,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
