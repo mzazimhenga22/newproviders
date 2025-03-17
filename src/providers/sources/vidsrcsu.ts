@@ -43,7 +43,59 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   if (!servers.length) throw new NotFoundError('No server playlist found');
 
-  const embeds: SourcererEmbed[] = servers.map((server) => ({
+  // Process orbitproxy.ru URLs so we can proxy yourself
+  // REQUIRES A PROXY FOR MOST SERVERS set it up here https://github.com/Pasithea0/M3U8-Proxy
+  const processedServers = await Promise.all(
+    servers.map(async (server) => {
+      if (server.url.includes('orbitproxy.ru')) {
+        try {
+          const urlParts = server.url.split('orbitproxy.ru/');
+          if (urlParts.length >= 2) {
+            const encryptedPart = urlParts[1].split('.m3u8')[0];
+
+            try {
+              const decodedData = Buffer.from(encryptedPart, 'base64').toString('utf-8');
+              // eslint-disable-next-line no-console
+              console.log('Decoded data:', decodedData);
+
+              const jsonData = JSON.parse(decodedData);
+
+              const originalUrl = jsonData.u;
+              const origin = jsonData.o || '';
+              const referer = jsonData.r || '';
+
+              const encodedUrl = encodeURIComponent(originalUrl);
+              const encodedHeaders = encodeURIComponent(
+                JSON.stringify({
+                  origin,
+                  referer,
+                }),
+              );
+
+              const proxyUrl = `https://fed-m3u8.pstream.org/m3u8-proxy?url=${encodedUrl}&headers=${encodedHeaders}`; // bring your own
+              // eslint-disable-next-line no-console
+              console.log('Created proxy URL:', proxyUrl);
+
+              return {
+                ...server,
+                url: proxyUrl,
+              };
+            } catch (jsonError) {
+              // eslint-disable-next-line no-console
+              console.error('Error decoding/parsing orbitproxy data:', jsonError);
+              return server;
+            }
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('Error processing orbitproxy URL:', error);
+        }
+      }
+      return server;
+    }),
+  );
+
+  const embeds: SourcererEmbed[] = processedServers.map((server) => ({
     embedId: `server-${server.serverNumber}`,
     url: server.url,
   }));
