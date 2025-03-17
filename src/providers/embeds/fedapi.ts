@@ -63,6 +63,7 @@ const providers = [
     name: 'FED API (Shared)',
     useToken: false,
     useCacheUrl: false,
+    disabled: true,
   },
   {
     id: 'feddb',
@@ -73,11 +74,19 @@ const providers = [
   },
 ];
 
-function embed(provider: { id: string; rank: number; name: string; useToken: boolean; useCacheUrl: boolean }) {
+function embed(provider: {
+  id: string;
+  rank: number;
+  name: string;
+  useToken: boolean;
+  useCacheUrl: boolean;
+  disabled?: boolean;
+}) {
   return makeEmbed({
     id: provider.id,
     name: provider.name,
     rank: provider.rank,
+    disabled: provider.disabled,
     async scrape(ctx): Promise<EmbedOutput> {
       // Parse the query parameters from the URL
       const query = JSON.parse(ctx.url);
