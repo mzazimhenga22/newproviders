@@ -16,7 +16,16 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   if (!apiRes) {
     throw new NotFoundError('Failed to fetch StreamBox data');
   }
+
   const data = await apiRes;
+
+  if (data.provider !== 'MovieBox') {
+    throw new NotFoundError('Not a MovieBox provider response');
+  }
+
+  if (!data.url || data.url.length === 0) {
+    throw new NotFoundError('No MovieBox streams found');
+  }
 
   const streams: Record<string, string> = {};
   data.url.forEach((stream: any) => {
