@@ -61,13 +61,13 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
               const jsonData = JSON.parse(decodedData);
 
               const originalUrl = jsonData.u;
-              const origin = jsonData.o || '';
+              // const origin = jsonData.o || '';
               const referer = jsonData.r || '';
 
               const encodedUrl = encodeURIComponent(originalUrl);
               const encodedHeaders = encodeURIComponent(
                 JSON.stringify({
-                  origin,
+                  // origin,
                   referer,
                 }),
               );
