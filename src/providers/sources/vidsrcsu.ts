@@ -72,7 +72,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
                 }),
               );
 
-              const proxyUrl = `https://fed-m3u8.pstream.org/m3u8-proxy?url=${encodedUrl}&headers=${encodedHeaders}`; // bring your own
+              const proxyUrl = `https://m3u8.wafflehacker.io/m3u8-proxy?url=${encodedUrl}&headers=${encodedHeaders}`; // bring your own
               // eslint-disable-next-line no-console
               console.log('Created proxy URL:', proxyUrl);
 
