@@ -129,7 +129,7 @@ export const nunflixScraper = makeSourcerer({
   id: 'nunflix',
   name: 'NFlix',
   rank: 240,
-  disabled: false,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
