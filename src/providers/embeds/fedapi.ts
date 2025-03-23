@@ -125,7 +125,10 @@ function embed(provider: {
         headers: Object.keys(headers).length > 0 ? headers : undefined,
       });
 
-      if (data?.error === 'No results found in MovieBox search') {
+      if (data?.error && data.error.startsWith('No results found in MovieBox search')) {
+        throw new NotFoundError('No stream found');
+      }
+      if (data?.error === 'No cached data found for this ID') {
         throw new NotFoundError('No stream found');
       }
       if (!data) throw new NotFoundError('No response from API');
