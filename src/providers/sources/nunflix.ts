@@ -128,8 +128,8 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const nunflixScraper = makeSourcerer({
   id: 'nunflix',
   name: 'NFlix',
-  rank: 240,
-  disabled: true,
+  rank: 125,
+  disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
