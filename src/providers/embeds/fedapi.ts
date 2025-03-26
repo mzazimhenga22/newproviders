@@ -58,19 +58,19 @@ const providers = [
     useCacheUrl: false,
   },
   {
-    id: 'fedapi-shared',
+    id: 'feddb',
     rank: 302,
+    name: 'FED DB',
+    useToken: false,
+    useCacheUrl: true,
+  },
+  {
+    id: 'fedapi-shared',
+    rank: 301,
     name: 'FED API (Shared)',
     useToken: false,
     useCacheUrl: false,
     disabled: true,
-  },
-  {
-    id: 'feddb',
-    rank: 301,
-    name: 'FED DB',
-    useToken: false,
-    useCacheUrl: true,
   },
 ];
 
