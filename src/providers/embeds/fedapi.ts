@@ -128,6 +128,9 @@ function embed(provider: {
       if (data?.error && data.error.startsWith('No results found in MovieBox search')) {
         throw new NotFoundError('No stream found');
       }
+      if (data?.error === 'No cached data found for this episode') {
+        throw new NotFoundError('No stream found');
+      }
       if (data?.error === 'No cached data found for this ID') {
         throw new NotFoundError('No stream found');
       }
