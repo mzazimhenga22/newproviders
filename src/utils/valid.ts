@@ -1,6 +1,5 @@
 // import { alphaScraper, deltaScraper } from '@/providers/embeds/nsbx';
 // import { astraScraper, novaScraper, orionScraper } from '@/providers/embeds/whvx';
-import { FedAPIPrivateScraper, FedAPISharedScraper, FedDBScraper } from '@/providers/embeds/fedapi';
 import { warezcdnembedMp4Scraper } from '@/providers/embeds/warezcdn/mp4';
 import { embedsuScraper } from '@/providers/sources/embedsu';
 import { FedAPIScraper } from '@/providers/sources/fedapi';
@@ -19,9 +18,6 @@ const SKIP_VALIDATION_CHECK_IDS = [
   uiraliveScraper.id,
   embedsuScraper.id,
   FedAPIScraper.id,
-  FedAPIPrivateScraper.id,
-  FedDBScraper.id,
-  FedAPISharedScraper.id,
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
