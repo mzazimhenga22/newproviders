@@ -70,7 +70,6 @@ const providers = [
     name: 'FED API (Shared)',
     useToken: false,
     useCacheUrl: false,
-    disabled: true,
   },
 ];
 
