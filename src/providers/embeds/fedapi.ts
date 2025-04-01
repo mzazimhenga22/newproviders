@@ -71,6 +71,7 @@ const providers = [
     name: 'FED API (Shared)',
     useToken: false,
     useCacheUrl: false,
+    flags: [flags.IP_LOCKED],
   },
 ];
 
