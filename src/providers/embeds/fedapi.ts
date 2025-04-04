@@ -7,17 +7,7 @@ import { Caption } from '../captions';
 
 // Thanks Nemo for this API!
 const BASE_URL = 'https://fed-api.pstream.org';
-const SHARED_BASE_URL = 'https://fed-api-shared.pstream.org';
 const CACHE_URL = 'https://fed-api.pstream.org/cache';
-
-const getShareConsent = (): string | null => {
-  try {
-    return typeof window !== 'undefined' ? window.localStorage.getItem('share-token') : null;
-  } catch (e) {
-    console.warn('Unable to access localStorage:', e);
-    return null;
-  }
-};
 
 // Language mapping for subtitles
 const languageMap: Record<string, string> = {
@@ -65,13 +55,6 @@ const providers = [
     useToken: false,
     useCacheUrl: true,
   },
-  {
-    id: 'fedapi-shared',
-    rank: 301,
-    name: 'FED API (Shared)',
-    useToken: false,
-    useCacheUrl: false,
-  },
 ];
 
 function embed(provider: {
@@ -102,23 +85,16 @@ function embed(provider: {
             : `${CACHE_URL}/${query.imdbId}/${query.season}/${query.episode}`;
       } else {
         // Standard API URL format
-        const baseUrl = !provider.useToken ? SHARED_BASE_URL : BASE_URL;
         apiUrl =
           query.type === 'movie'
-            ? `${baseUrl}/movie/${query.imdbId}`
-            : `${baseUrl}/tv/${query.tmdbId}/${query.season}/${query.episode}`;
+            ? `${BASE_URL}/movie/${query.imdbId}`
+            : `${BASE_URL}/tv/${query.tmdbId}/${query.season}/${query.episode}`;
       }
 
       // Prepare request headers
       const headers: Record<string, string> = {};
       if (provider.useToken && query.token) {
         headers['ui-token'] = query.token;
-      }
-
-      // Add share-token header if it's set to "true" in localStorage
-      const shareToken = getShareConsent();
-      if (shareToken === 'true') {
-        headers['share-token'] = 'true';
       }
 
       // Fetch data from the API
@@ -160,11 +136,6 @@ function embed(provider: {
       const filteredStreams = Object.entries(streams).reduce((acc: Record<string, string>, [quality, url]) => {
         // Skip unknown for cached provider
         if (provider.useCacheUrl && quality === 'unknown') {
-          return acc;
-        }
-
-        // Skip unknown for shared provider
-        if (!provider.useToken && !provider.useCacheUrl && quality === 'unknown') {
           return acc;
         }
 
@@ -250,4 +221,4 @@ function embed(provider: {
   });
 }
 
-export const [FedAPIPrivateScraper, FedAPISharedScraper, FedDBScraper] = providers.map(embed);
+export const [FedAPIPrivateScraper, FedDBScraper] = providers.map(embed);
