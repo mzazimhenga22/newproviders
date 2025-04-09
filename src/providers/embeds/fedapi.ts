@@ -100,7 +100,6 @@ function embed(provider: {
       // Fetch data from the API
       const data = await ctx.fetcher<StreamData>(apiUrl, {
         headers: Object.keys(headers).length > 0 ? headers : undefined,
-        credentials: 'include',
       });
 
       if (data?.error && data.error.startsWith('No results found in MovieBox search')) {
