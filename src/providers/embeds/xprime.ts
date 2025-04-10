@@ -4,7 +4,7 @@ import { EmbedOutput, makeEmbed } from '@/providers/base';
 import { NotFoundError } from '@/utils/errors';
 
 const foxBaseUrl = 'https://xprime.tv/foxtemp';
-const apolloBaseUrl = 'http://kendrickl-3amar.site';
+const apolloBaseUrl = 'https://kendrickl-3amar.site';
 
 const languageMap: Record<string, string> = {
   'chinese - hong kong': 'zh',
