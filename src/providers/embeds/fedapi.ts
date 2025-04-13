@@ -88,7 +88,7 @@ function embed(provider: {
         apiUrl =
           query.type === 'movie'
             ? `${BASE_URL}/movie/${query.imdbId}`
-            : `${BASE_URL}/tv/${query.tmdbId}/${query.season}/${query.episode}`;
+            : `${BASE_URL}/tv/${query.imdbId}/${query.season}/${query.episode}`;
       }
 
       // Prepare request headers
