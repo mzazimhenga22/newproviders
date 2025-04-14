@@ -117,6 +117,14 @@ export const xprimeApolloEmbed = makeEmbed({
           playlist: data.url,
           flags: [flags.CORS_ALLOWED],
           captions,
+          ...(data.thumbnails?.file
+            ? {
+                thumbnailTrack: {
+                  type: 'vtt',
+                  url: data.thumbnails.file,
+                },
+              }
+            : {}),
         },
       ],
     };
