@@ -9,7 +9,7 @@ import { Caption } from '../captions';
 
 const getRegion = (): string | null => {
   try {
-    return typeof window !== 'undefined' ? window.localStorage.getItem('__MW::region') : null;
+    return typeof window !== 'undefined' ? window.localStorage.getItem('region') : null;
   } catch (e) {
     console.warn('Unable to access localStorage:', e);
     return null;
