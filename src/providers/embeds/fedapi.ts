@@ -1,13 +1,40 @@
 /* eslint-disable no-console */
+
+// Thanks Nemo for this API!
 import { flags } from '@/entrypoint/utils/targets';
 import { EmbedOutput, makeEmbed } from '@/providers/base';
 import { NotFoundError } from '@/utils/errors';
 
 import { Caption } from '../captions';
 
-// Thanks Nemo for this API!
-const BASE_URL = 'https://fed-api.pstream.org';
-const CACHE_URL = 'https://fed-api.pstream.org/cache';
+const getRegion = (): string | null => {
+  try {
+    return typeof window !== 'undefined' ? window.localStorage.getItem('__MW::region') : null;
+  } catch (e) {
+    console.warn('Unable to access localStorage:', e);
+    return null;
+  }
+};
+
+const getBaseUrl = (): string => {
+  const region = getRegion();
+  switch (region) {
+    case 'us-east':
+      return 'https://fed-api-east.pstream.org';
+    case 'us-west':
+      return 'https://fed-api-west.pstream.org';
+    case 'south-america':
+      return 'https://fed-api-south.pstream.org';
+    case 'asia':
+      return 'https://fed-api-asia.pstream.org';
+    case 'europe':
+      return 'https://fed-api-europe.pstream.org';
+    default:
+      return 'https://fed-api-east.pstream.org';
+  }
+};
+
+const BASE_URL = getBaseUrl();
 
 // Language mapping for subtitles
 const languageMap: Record<string, string> = {
@@ -81,8 +108,8 @@ function embed(provider: {
         // Cache URL format
         apiUrl =
           query.type === 'movie'
-            ? `${CACHE_URL}/${query.imdbId}`
-            : `${CACHE_URL}/${query.imdbId}/${query.season}/${query.episode}`;
+            ? `${BASE_URL}/cache/${query.imdbId}`
+            : `${BASE_URL}/cache/${query.imdbId}/${query.season}/${query.episode}`;
       } else {
         // Standard API URL format
         apiUrl =
