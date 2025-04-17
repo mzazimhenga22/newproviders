@@ -9,9 +9,13 @@ import { Caption } from '../captions';
 
 const getRegion = (): string | null => {
   try {
-    return typeof window !== 'undefined' ? window.localStorage.getItem('region') : null;
+    if (typeof window === 'undefined') return null;
+    const regionData = window.localStorage.getItem('__MW::region');
+    if (!regionData) return null;
+    const parsed = JSON.parse(regionData);
+    return parsed?.state?.region ?? null;
   } catch (e) {
-    console.warn('Unable to access localStorage:', e);
+    console.warn('Unable to access or parse region from localStorage:', e);
     return null;
   }
 };
