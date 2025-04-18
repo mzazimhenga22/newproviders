@@ -47,7 +47,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 
   const apiUrl =
     ctx.media.type === 'movie'
-      ? `${mamaApiBase}/movie/${ctx.media.tmdbId}&token=${userToken}`
+      ? `${mamaApiBase}/movie/${ctx.media.tmdbId}?token=${userToken}`
       : `${mamaApiBase}/tv/${ctx.media.tmdbId}?season=${ctx.media.season.number}&episode=${ctx.media.episode.number}&token=${userToken}`;
 
   const apiRes = await ctx.proxiedFetcher(apiUrl);
@@ -140,8 +140,8 @@ export const nunflixScraper = makeSourcerer({
   id: 'nunflix',
   name: 'NFlix',
   rank: 155,
-  // disabled: !getUserToken(),
-  disabled: true,
+  disabled: !getUserToken(),
+  // disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
