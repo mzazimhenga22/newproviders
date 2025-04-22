@@ -6,6 +6,7 @@ import { NotFoundError } from '@/utils/errors';
 const foxBaseUrl = 'https://xprime.tv/foxtemp';
 const apolloBaseUrl = 'https://kendrickl-3amar.site';
 const showboxBaseUrl = 'https://xprime.tv/primebox';
+const marantBaseUrl = 'https://backend.xprime.tv/marant';
 
 const languageMap: Record<string, string> = {
   'chinese - hong kong': 'zh',
@@ -41,7 +42,7 @@ const languageMap: Record<string, string> = {
 export const xprimeFoxEmbed = makeEmbed({
   id: 'xprime-fox',
   name: 'Fox',
-  rank: 240,
+  rank: 241,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const params = new URLSearchParams({
@@ -85,7 +86,7 @@ export const xprimeFoxEmbed = makeEmbed({
 export const xprimeApolloEmbed = makeEmbed({
   id: 'xprime-apollo',
   name: 'Appolo',
-  rank: 242,
+  rank: 243,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     let url = `${apolloBaseUrl}/${query.tmdbId}`;
@@ -134,7 +135,7 @@ export const xprimeApolloEmbed = makeEmbed({
 export const xprimeStreamboxEmbed = makeEmbed({
   id: 'xprime-streambox',
   name: 'Streambox',
-  rank: 241,
+  rank: 242,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     let url = showboxBaseUrl;
@@ -192,6 +193,40 @@ export const xprimeStreamboxEmbed = makeEmbed({
           },
           type: 'file',
           flags: [flags.CORS_ALLOWED],
+        },
+      ],
+    };
+  },
+});
+
+export const xprimeMarantEmbed = makeEmbed({
+  id: 'xprime-marant',
+  name: 'Marant',
+  rank: 240,
+  async scrape(ctx): Promise<EmbedOutput> {
+    const query = JSON.parse(ctx.url);
+    let url = `${marantBaseUrl}?id=${query.tmdbId}`;
+
+    if (query.type === 'show') {
+      url += `&season=${query.season}&episode=${query.episode}`;
+    }
+
+    const data = await await ctx.fetcher(url);
+
+    if (!data) throw new NotFoundError('No response received');
+    if (data.error) throw new NotFoundError(data.error);
+    if (!data.url) throw new NotFoundError('No stream URL found in response');
+
+    ctx.progress(90);
+
+    return {
+      stream: [
+        {
+          type: 'hls',
+          id: 'primary',
+          playlist: data.url,
+          flags: [flags.CORS_ALLOWED],
+          captions: [],
         },
       ],
     };
