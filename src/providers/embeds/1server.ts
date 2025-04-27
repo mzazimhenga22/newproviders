@@ -79,7 +79,7 @@ function processProxiedURL(url: string): string {
     return url.replace(/https:\/\/[^/]+\/m3u8-proxy/, 'https://proxy.fifthwit.net/m3u8-proxy');
   }
 
-  return url;
+  return createProxyUrl(url);
 }
 
 function isOnionflixerUrl(url: string): boolean {
