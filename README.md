@@ -1,13 +1,13 @@
 # @movie-web/providers
 
-package that holds all providers of movie-web.
+package that holds all providers of P-Stream.
 Feel free to use for your own projects.
 
 features:
 - scrape popular streaming websites
 - works in both browser and server-side
 
-Visit documentation here: sussy-code.github.io/providers/
+Visit documentation here: https://sussy-code.github.io/providers/
 
 ## How to run locally or test my changes
 
