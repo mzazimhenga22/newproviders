@@ -48,7 +48,7 @@ function embed(provider: { id: string; name: string; rank: number }) {
             id: 'primary',
             type: 'hls',
             playlist: videoUrl,
-            flags: [flags.CORS_ALLOWED],
+            flags: [],
             captions: [],
             headers: {
               Referer: 'https://streamwish.to/',
