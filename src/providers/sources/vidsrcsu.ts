@@ -2,17 +2,14 @@ import { flags } from '@/entrypoint/utils/targets';
 import { SourcererEmbed, SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
+import { createM3U8ProxyUrl, updateM3U8ProxyUrl } from '@/utils/proxy';
 
 // REQUIRES A PROXY FOR MOST SERVERS set it up here https://github.com/Pasithea0/M3U8-Proxy
 function createProxyUrl(originalUrl: string, referer: string): string {
-  const encodedUrl = encodeURIComponent(originalUrl);
-  const encodedHeaders = encodeURIComponent(
-    JSON.stringify({
-      referer,
-    }),
-  );
-
-  return `https://proxy.fifthwit.net/m3u8-proxy?url=${encodedUrl}&headers=${encodedHeaders}`;
+  const headers = {
+    referer,
+  };
+  return createM3U8ProxyUrl(originalUrl, headers);
 }
 
 function processProxiedURL(url: string): string {
@@ -40,7 +37,7 @@ function processProxiedURL(url: string): string {
 
   // Handle other proxied URLs
   if (url.includes('/m3u8-proxy?url=')) {
-    return url.replace(/https:\/\/[^/]+\/m3u8-proxy/, 'https://proxy.fifthwit.net/m3u8-proxy');
+    return updateM3U8ProxyUrl(url);
   }
 
   return url;
