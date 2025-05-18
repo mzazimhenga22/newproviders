@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
 import { NotFoundError } from '@/utils/errors';
@@ -32,6 +33,8 @@ function embed(provider: { id: string; name: string; rank: number }) {
     name: provider.name,
     rank: provider.rank,
     async scrape(ctx) {
+      console.log('Starting scrape for StreamWish with URL:', ctx.url);
+
       const encodedUrl = encodeURIComponent(ctx.url);
       const apiUrl = `https://ws-m3u8.moonpic.qzz.io/m3u8/${encodedUrl}`;
 
@@ -42,9 +45,7 @@ function embed(provider: { id: string; name: string; rank: number }) {
         },
       });
 
-      if (!response.ok) throw new NotFoundError('No video URL found');
-      const data = await response.json();
-
+      const data: { m3u8: string } = await response.json();
       const videoUrl = data.m3u8;
       if (!videoUrl) throw new NotFoundError('No video URL found');
 
