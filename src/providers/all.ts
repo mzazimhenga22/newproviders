@@ -79,9 +79,11 @@ import { webtor1080Scraper, webtor480Scraper, webtor4kScraper, webtor720Scraper 
 import {
   xprimeApolloEmbed,
   xprimeFoxEmbed,
+  xprimeHarbourEmbed,
   xprimeMarantEmbed,
   xprimePrimenetEmbed,
   xprimeStreamboxEmbed,
+  xprimeVolkswagenEmbed,
 } from './embeds/xprime';
 import { oneServerScraper } from './sources/1server';
 import { EightStreamScraper } from './sources/8stream';
@@ -103,12 +105,12 @@ import { uiraliveScraper } from './sources/uiralive';
 import { vidapiClickScraper } from './sources/vidapiclick';
 import { warezcdnScraper } from './sources/warezcdn';
 import { webtorScraper } from './sources/webtor';
+import { wecimaScraper } from './sources/wecima';
 import { xprimeScraper } from './sources/xprime';
 
 export function gatherAllSources(): Array<Sourcerer> {
   // all sources are gathered here
   return [
-    animeflvScraper,
     cuevana3Scraper,
     catflixScraper,
     ridooMoviesScraper,
@@ -138,6 +140,8 @@ export function gatherAllSources(): Array<Sourcerer> {
     ConsumetScraper,
     hianimeScraper,
     oneServerScraper,
+    wecimaScraper,
+    animeflvScraper,
   ];
 }
 
@@ -150,13 +154,8 @@ export function gatherAllEmbeds(): Array<Embed> {
     ridooScraper,
     closeLoadScraper,
     doodScraper,
-    streamwishJapaneseScraper,
-    streamwishLatinoScraper,
-    streamwishSpanishScraper,
-    streamwishEnglishScraper,
     streamvidScraper,
     streamtapeScraper,
-    streamtapeLatinoScraper,
     warezcdnembedHlsScraper,
     warezcdnembedMp4Scraper,
     warezPlayerScraper,
@@ -193,6 +192,8 @@ export function gatherAllEmbeds(): Array<Embed> {
     xprimeStreamboxEmbed,
     xprimeMarantEmbed,
     xprimePrimenetEmbed,
+    xprimeVolkswagenEmbed,
+    xprimeHarbourEmbed,
     ConsumetVidCloudScraper,
     ConsumetStreamSBScraper,
     ConsumetVidStreamingScraper,
@@ -210,5 +211,10 @@ export function gatherAllEmbeds(): Array<Embed> {
     oneServerHianimeEmbed,
     oneServerAnimepaheEmbed,
     oneServerAnizoneEmbed,
+    streamwishJapaneseScraper,
+    streamwishLatinoScraper,
+    streamwishSpanishScraper,
+    streamwishEnglishScraper,
+    streamtapeLatinoScraper,
   ];
 }
