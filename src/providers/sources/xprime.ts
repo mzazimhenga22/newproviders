@@ -48,7 +48,7 @@ export const xprimeScraper = makeSourcerer({
   id: 'xprimetv',
   name: 'xprime.tv 🤝',
   rank: 240,
-  disabled: true,
+  disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
