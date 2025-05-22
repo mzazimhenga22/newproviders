@@ -70,7 +70,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const mp4hydraScraper = makeSourcerer({
   id: 'mp4hydra',
   name: 'Mp4Hydra',
-  rank: 3,
+  rank: 4,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,

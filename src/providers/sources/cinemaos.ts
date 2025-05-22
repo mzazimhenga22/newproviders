@@ -69,9 +69,6 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     });
   }
 
-  // eslint-disable-next-line no-console
-  console.log(embeds);
-
   ctx.progress(50);
 
   return { embeds };
@@ -80,7 +77,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const cinemaosScraper = makeSourcerer({
   id: 'cinemaos',
   name: 'CinemaOS',
-  rank: 230,
+  rank: 150,
   disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
