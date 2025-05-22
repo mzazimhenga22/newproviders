@@ -37,6 +37,7 @@ import {
   autoembedTamilScraper,
   autoembedTeluguScraper,
 } from './embeds/autoembed';
+import { cinemaosEmbeds } from './embeds/cinemaos';
 import { closeLoadScraper } from './embeds/closeload';
 import {
   ConsumetStreamSBScraper,
@@ -88,6 +89,7 @@ import {
 import { oneServerScraper } from './sources/1server';
 import { EightStreamScraper } from './sources/8stream';
 import { animeflvScraper } from './sources/animeflv';
+import { cinemaosScraper } from './sources/cinemaos';
 import { coitusScraper } from './sources/coitus';
 import { ConsumetScraper } from './sources/consumet';
 import { cuevana3Scraper } from './sources/cuevana3';
@@ -142,6 +144,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     oneServerScraper,
     wecimaScraper,
     animeflvScraper,
+    cinemaosScraper,
   ];
 }
 
@@ -216,5 +219,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     streamwishSpanishScraper,
     streamwishEnglishScraper,
     streamtapeLatinoScraper,
+    ...cinemaosEmbeds,
   ];
 }
