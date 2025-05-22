@@ -100,6 +100,7 @@ import { hollymoviehdScraper } from './sources/hollymoviehd';
 import { iosmirrorScraper } from './sources/iosmirror';
 import { iosmirrorPVScraper } from './sources/iosmirrorpv';
 import { nunflixScraper } from './sources/nunflix';
+import { oneroomScraper } from './sources/oneroom';
 import { ridooMoviesScraper } from './sources/ridomovies';
 import { slidemoviesScraper } from './sources/slidemovies';
 import { soaperTvScraper } from './sources/soapertv';
@@ -147,6 +148,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     animeflvScraper,
     cinemaosScraper,
     hollymoviehdScraper,
+    oneroomScraper,
   ];
 }
 
