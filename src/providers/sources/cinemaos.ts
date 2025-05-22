@@ -2,6 +2,8 @@ import { flags } from '@/entrypoint/utils/targets';
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 
+// const baseUrl = atob('aHR0cHM6Ly9jaW5lbWFvcy12My52ZXJjZWwuYXBwLw==');
+
 const CINEMAOS_SERVERS = [
   //   'flowcast',
   'shadow',
@@ -15,30 +17,19 @@ const CINEMAOS_SERVERS = [
   //   'alpha',
   //   'kaze',
   //   'zenith',
-  'cast',
+  //   'cast',
   //   'ghost',
-  'halo',
-  'kinoecho',
+  //   'halo',
+  //   'kinoecho',
   //   'ee3',
-  'volt',
+  //   'volt',
   //   'putafilme',
   'ophim',
   //   'kage',
 ];
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
-  const res = await ctx.proxiedFetcher(
-    'https://cinemaos-v3.vercel.app/api/neo/backendfetch?requestID=VideoProviderServices',
-  );
-  let availableServers = [];
-  try {
-    const data = typeof res === 'string' ? JSON.parse(res) : res;
-    availableServers = Array.isArray(data?.data) ? data.data : [];
-  } catch (e) {
-    availableServers = [];
-  }
-
-  const filteredServers = availableServers.filter((server: string) => CINEMAOS_SERVERS.includes(server));
+  const embeds = [];
 
   const query: any = {
     type: ctx.media.type,
@@ -50,13 +41,38 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     query.episode = ctx.media.episode.number;
   }
 
-  const embeds = filteredServers.map((server: string) => ({
-    embedId: `cinemaos-${server}`,
-    url: JSON.stringify({ ...query, service: server }),
-  }));
+  //   // V2 Embeds / Hexa
+  //   try {
+  //     const hexaUrl = `api/hexa?type=${query.type}&tmdbId=${query.tmdbId}`;
+  //     const hexaRes = await ctx.proxiedFetcher(hexaUrl, { baseUrl });
+  //     const hexaData = typeof hexaRes === 'string' ? JSON.parse(hexaRes) : hexaRes;
+  //     if (hexaData && hexaData.sources && typeof hexaData.sources === 'object') {
+  //       for (const [key, value] of Object.entries<any>(hexaData.sources)) {
+  //         if (value && value.url) {
+  //           embeds.push({
+  //             embedId: `cinemaos-hexa-${key}`,
+  //             url: JSON.stringify({ ...query, service: `hexa-${key}`, directUrl: value.url }),
+  //           });
+  //         }
+  //       }
+  //     }
+  //   } catch (e: any) {
+  //     // eslint-disable-next-line no-console
+  //     console.error('Failed to fetch hexa sources');
+  //   }
+
+  // V3 Embeds
+  for (const server of CINEMAOS_SERVERS) {
+    embeds.push({
+      embedId: `cinemaos-${server}`,
+      url: JSON.stringify({ ...query, service: server }),
+    });
+  }
 
   // eslint-disable-next-line no-console
   console.log(embeds);
+
+  ctx.progress(50);
 
   return { embeds };
 }

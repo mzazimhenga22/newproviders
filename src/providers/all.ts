@@ -220,5 +220,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     streamwishEnglishScraper,
     streamtapeLatinoScraper,
     ...cinemaosEmbeds,
+    // ...cinemaosHexaEmbeds,
   ];
 }

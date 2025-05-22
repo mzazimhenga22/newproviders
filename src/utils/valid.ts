@@ -11,6 +11,7 @@ import {
   oneServerPrimeboxEmbed,
   oneServerVidsrcsuEmbed,
 } from '@/providers/embeds/1server';
+import { cinemaosHexaEmbeds } from '@/providers/embeds/cinemaos';
 import {
   ConsumetStreamSBScraper,
   ConsumetStreamTapeScraper,
@@ -87,6 +88,7 @@ const SKIP_VALIDATION_CHECK_IDS = [
   oneServerAnimepaheEmbed.id,
   oneServerAnizoneEmbed.id,
   wecimaScraper.id,
+  ...cinemaosHexaEmbeds.map((e) => e.id),
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
