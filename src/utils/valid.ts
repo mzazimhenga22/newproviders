@@ -43,6 +43,7 @@ import {
   xprimeVolkswagenEmbed,
 } from '@/providers/embeds/xprime';
 import { embedsuScraper } from '@/providers/sources/embedsu';
+import { soaperTvScraper } from '@/providers/sources/soapertv';
 import { uiraliveScraper } from '@/providers/sources/uiralive';
 import { wecimaScraper } from '@/providers/sources/wecima';
 import { Stream } from '@/providers/streams';
@@ -91,6 +92,7 @@ const SKIP_VALIDATION_CHECK_IDS = [
   oneServerAnizoneEmbed.id,
   wecimaScraper.id,
   ...cinemaosHexaEmbeds.map((e) => e.id),
+  soaperTvScraper.id,
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
