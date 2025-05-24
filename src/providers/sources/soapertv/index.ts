@@ -109,7 +109,11 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
     stream: [
       {
         id: 'primary',
-        playlist: await convertPlaylistsToDataUrls(ctx.proxiedFetcher, `${baseUrl}/${streamResJson.val}`),
+        playlist: await convertPlaylistsToDataUrls(ctx.proxiedFetcher, `${baseUrl}/${streamResJson.val}`, {
+          'User-Agent':
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+          'Viewport-Width': '375',
+        }),
         type: 'hls',
         proxyDepth: 2,
         flags: [flags.CORS_ALLOWED],
@@ -119,7 +123,11 @@ const universalScraper = async (ctx: MovieScrapeContext | ShowScrapeContext): Pr
         ? [
             {
               id: 'backup',
-              playlist: await convertPlaylistsToDataUrls(ctx.proxiedFetcher, `${baseUrl}/${streamResJson.val_bak}`),
+              playlist: await convertPlaylistsToDataUrls(ctx.proxiedFetcher, `${baseUrl}/${streamResJson.val_bak}`, {
+                'User-Agent':
+                  'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1',
+                'Viewport-Width': '375',
+              }),
               type: 'hls',
               flags: [flags.CORS_ALLOWED],
               proxyDepth: 2,
