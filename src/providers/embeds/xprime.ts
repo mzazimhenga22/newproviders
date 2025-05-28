@@ -3,7 +3,7 @@ import { flags } from '@/entrypoint/utils/targets';
 import { EmbedOutput, makeEmbed } from '@/providers/base';
 import { NotFoundError } from '@/utils/errors';
 
-const foxBaseUrl = 'https://backend.xprime.tv/foxtemp';
+const foxBaseUrl = 'https://backend.xprime.tv/fox';
 const apolloBaseUrl = 'https://kendrickl-3amar.site';
 const showboxBaseUrl = 'https://backend.xprime.tv/primebox';
 const marantBaseUrl = 'https://backend.xprime.tv/marant';
