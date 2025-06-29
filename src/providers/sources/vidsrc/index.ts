@@ -119,3 +119,5 @@ export const vidsrcScraper = makeSourcerer({
   scrapeMovie: vidsrcScrape,
   scrapeShow: vidsrcScrape,
 });
+
+// thanks Mirzya for this scraper!
