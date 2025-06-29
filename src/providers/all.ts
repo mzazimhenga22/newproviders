@@ -10,6 +10,7 @@ import { fsharetvScraper } from '@/providers/sources/fsharetv';
 import { insertunitScraper } from '@/providers/sources/insertunit';
 import { mp4hydraScraper } from '@/providers/sources/mp4hydra';
 import { tugaflixScraper } from '@/providers/sources/tugaflix';
+import { vidsrcScraper } from '@/providers/sources/vidsrc';
 import { vidsrcsuScraper } from '@/providers/sources/vidsrcsu';
 
 import {
@@ -84,6 +85,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     ee3Scraper,
     fsharetvScraper,
     vidsrcsuScraper,
+    vidsrcScraper,
     mp4hydraScraper,
     embedsuScraper,
     slidemoviesScraper,
