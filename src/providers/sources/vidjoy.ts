@@ -37,7 +37,7 @@ async function comboScraper(ctx: MovieScrapeContext): Promise<SourcererOutput> {
           'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         },
-        flags: [flags.CORS_ALLOWED, flags.PROXY_BLOCKED],
+        flags: [flags.PROXY_BLOCKED],
         captions: [],
       },
     ],
@@ -48,6 +48,6 @@ export const vidjoyScraper = makeSourcerer({
   id: 'vidjoy',
   name: 'Vidjoy',
   rank: 185,
-  flags: [flags.CORS_ALLOWED, flags.PROXY_BLOCKED],
+  flags: [flags.PROXY_BLOCKED],
   scrapeMovie: comboScraper,
 });
