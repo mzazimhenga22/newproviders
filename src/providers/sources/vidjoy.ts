@@ -31,7 +31,7 @@ async function comboScraper(ctx: MovieScrapeContext): Promise<SourcererOutput> {
         id: 'primary',
         type: 'hls',
         playlist: `${baseUrl}/movies/${ctx.media.tmdbId}/index.m3u8`,
-        flags: [flags.CORS_ALLOWED],
+        flags: [flags.CORS_ALLOWED, flags.PROXY_BLOCKED],
         captions: [],
       },
     ],
@@ -42,6 +42,6 @@ export const vidjoyScraper = makeSourcerer({
   id: 'vidjoy',
   name: 'Vidjoy',
   rank: 185,
-  flags: [flags.CORS_ALLOWED],
+  flags: [flags.CORS_ALLOWED, flags.PROXY_BLOCKED],
   scrapeMovie: comboScraper,
 });
