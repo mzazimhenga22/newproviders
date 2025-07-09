@@ -8,9 +8,9 @@ import { NotFoundError } from '@/utils/errors';
 
 const baseUrl = 'https://www3.animeflv.net';
 
-async function searchAnimeFlv(title: string): Promise<string> {
+async function searchAnimeFlv(ctx: ShowScrapeContext | MovieScrapeContext, title: string): Promise<string> {
   const searchUrl = `${baseUrl}/browse?q=${encodeURIComponent(title)}`;
-  const html = await fetch(searchUrl).then((r) => r.text());
+  const html = await ctx.proxiedFetcher(searchUrl).then((r) => r.text());
   const $ = load(html);
 
   const results = $('div.Container ul.ListAnimes li article');
@@ -35,8 +35,11 @@ async function searchAnimeFlv(title: string): Promise<string> {
   return fullUrl;
 }
 
-async function getEpisodes(animeUrl: string): Promise<{ number: number; url: string }[]> {
-  const html = await fetch(animeUrl).then((r) => r.text());
+async function getEpisodes(
+  ctx: ShowScrapeContext | MovieScrapeContext,
+  animeUrl: string,
+): Promise<{ number: number; url: string }[]> {
+  const html = await ctx.proxiedFetcher(animeUrl).then((r) => r.text());
   const $ = load(html);
 
   let episodes: { number: number; url: string }[] = [];
@@ -67,8 +70,11 @@ async function getEpisodes(animeUrl: string): Promise<{ number: number; url: str
   return episodes;
 }
 
-async function getEmbeds(episodeUrl: string): Promise<{ [key: string]: string | undefined }> {
-  const html = await fetch(episodeUrl).then((r) => r.text());
+async function getEmbeds(
+  ctx: ShowScrapeContext | MovieScrapeContext,
+  episodeUrl: string,
+): Promise<{ [key: string]: string | undefined }> {
+  const html = await ctx.proxiedFetcher(episodeUrl).then((r) => r.text());
   const $ = load(html);
 
   // Busca el script que contiene la variable videos
@@ -123,7 +129,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   if (!title) throw new NotFoundError('Falta el título');
   console.log(`[AnimeFLV] Iniciando scraping para: ${title}`);
 
-  const animeUrl = await searchAnimeFlv(title);
+  const animeUrl = await searchAnimeFlv(ctx, title);
 
   let episodeUrl = animeUrl;
 
@@ -131,13 +137,13 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     const episode = ctx.media.episode?.number;
     if (!episode) throw new NotFoundError('Faltan datos de episodio');
 
-    const episodes = await getEpisodes(animeUrl);
+    const episodes = await getEpisodes(ctx, animeUrl);
     const ep = episodes.find((e) => e.number === episode);
     if (!ep) throw new NotFoundError(`No se encontró el episodio ${episode}`);
 
     episodeUrl = ep.url;
   } else if (ctx.media.type === 'movie') {
-    const html = await fetch(animeUrl).then((r) => r.text());
+    const html = await ctx.proxiedFetcher(animeUrl).then((r) => r.text());
     const $ = load(html);
 
     let animeUri: string | null = null;
@@ -154,7 +160,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     episodeUrl = `${baseUrl}/ver/${animeUri}-1`;
   }
 
-  const embedsObj = await getEmbeds(episodeUrl);
+  const embedsObj = await getEmbeds(ctx, episodeUrl);
 
   // Construye el array de embeds válidos
   const filteredEmbeds = Object.entries(embedsObj)
