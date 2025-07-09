@@ -20,13 +20,7 @@ function embed(provider: { id: string; name: string; rank: number }) {
     name: provider.name,
     rank: provider.rank,
     async scrape(ctx) {
-      const response = await fetch(ctx.url, {
-        headers: {
-          Accept: 'text/html',
-        },
-      });
-
-      const embedHtml = await response.text();
+      const embedHtml = await ctx.proxiedFetcher<string>(ctx.url);
 
       const match = embedHtml.match(/robotlink'\).innerHTML = (.*)'/);
       if (!match) throw new Error('No match found');
