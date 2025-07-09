@@ -10,7 +10,6 @@ import { viperScraper } from '@/providers/embeds/viper';
 import { warezcdnembedMp4Scraper } from '@/providers/embeds/warezcdn/mp4';
 import { embedsuScraper } from '@/providers/sources/embedsu';
 import { soaperTvScraper } from '@/providers/sources/soapertv';
-import { vidjoyScraper } from '@/providers/sources/vidjoy';
 import { vidsrcScraper } from '@/providers/sources/vidsrc';
 import { wecimaScraper } from '@/providers/sources/wecima';
 import { Stream } from '@/providers/streams';
@@ -33,7 +32,6 @@ const SKIP_VALIDATION_CHECK_IDS = [
   ...cinemaosHexaEmbeds.map((e) => e.id),
   soaperTvScraper.id,
   vidsrcScraper.id,
-  vidjoyScraper.id,
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
