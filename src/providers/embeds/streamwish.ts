@@ -1,3 +1,11 @@
+/* eslint-disable no-console */
+
+// --------
+// READ
+// There will be an ssl certificate error, you must use Node.js fetcher or browser fetcher.
+// $ NODE_TLS_REJECT_UNAUTHORIZED=0 npm run cli -- --fetcher node-fetch --source-id streamwish-japanese --url "https://streamwish.to/e/abcdefc123"
+// --------
+
 import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
 
@@ -100,7 +108,7 @@ function unpack(packedCode: string): string {
 const providers = [
   {
     id: 'streamwish-japanese',
-    name: 'StreamWish (Japones Sub Español)',
+    name: 'StreamWish (Japanese Sub Español)',
     rank: 171,
   },
   {
@@ -133,7 +141,23 @@ function embed(provider: { id: string; name: string; rank: number }) {
         'User-Agent': 'Mozilla/5.0',
       };
 
-      const html = await ctx.proxiedFetcher<string>(ctx.url, { headers });
+      // console.log(`Fetching initial HTML from:`, ctx.url);
+      // console.log(`Request headers:`, headers);
+
+      let html: string;
+      try {
+        html = await ctx.proxiedFetcher<string>(ctx.url, { headers });
+        // console.log(`Successfully fetched HTML (${html.length} chars)`);
+      } catch (error) {
+        // console.error(`Failed to fetch initial HTML:`, error);
+        console.error(`Error details:`, {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          cause: (error as any).cause || undefined,
+          url: ctx.url,
+        });
+        throw error;
+      }
+
       const obfuscatedScript = html.match(/<script[^>]*>\s*(eval\(function\(p,a,c,k,e,d.*?\)[\s\S]*?)<\/script>/);
 
       if (!obfuscatedScript) {
@@ -160,10 +184,13 @@ function embed(provider: { id: string; name: string; rank: number }) {
         videoUrl = `https://swiftplayers.com/${videoUrl.replace(/^\/+/g, '')}`;
       }
 
+      // console.log(`Attempting to fetch m3u8 from:`, videoUrl);
+
       try {
         const m3u8Content = await ctx.proxiedFetcher<string>(videoUrl, {
           headers: { Referer: ctx.url },
         });
+        // console.log(`Successfully fetched m3u8 content (${m3u8Content.length} chars)`);
 
         const variants = Array.from(
           m3u8Content.matchAll(/#EXT-X-STREAM-INF:[^\n]+\n(?!iframe)([^\n]*index[^\n]*\.m3u8[^\n]*)/gi),
@@ -174,7 +201,15 @@ function embed(provider: { id: string; name: string; rank: number }) {
           const base = videoUrl.substring(0, videoUrl.lastIndexOf('/') + 1);
           videoUrl = base + best[1];
         }
-      } catch {
+      } catch (error) {
+        // console.error(`Failed to fetch m3u8 content:`, error);
+        // console.error(`m3u8 fetch error details:`, {
+        //   message: error instanceof Error ? error.message : 'Unknown error',
+        //   cause: (error as any).cause || undefined,
+        //   url: videoUrl,
+        //   referer: ctx.url,
+        // });
+        //
         // Intentionally empty to suppress errors during variant fetching
       }
 
