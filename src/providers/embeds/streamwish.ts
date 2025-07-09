@@ -8,6 +8,7 @@
 
 import { flags } from '@/entrypoint/utils/targets';
 import { makeEmbed } from '@/providers/base';
+import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 class Unbaser {
   private ALPHABET: Record<number, string> = {
@@ -213,18 +214,19 @@ function embed(provider: { id: string; name: string; rank: number }) {
         // Intentionally empty to suppress errors during variant fetching
       }
 
+      const videoHeaders = {
+        Referer: ctx.url,
+        Origin: ctx.url,
+      };
+
       return {
         stream: [
           {
             id: 'primary',
             type: 'hls',
-            playlist: videoUrl,
+            playlist: createM3U8ProxyUrl(videoUrl, videoHeaders),
             flags: [flags.CORS_ALLOWED],
             captions: [],
-            headers: {
-              Referer: ctx.url,
-              Origin: ctx.url,
-            },
           },
         ],
         embeds: [],
