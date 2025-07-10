@@ -5,6 +5,7 @@ import { flags } from '@/entrypoint/utils/targets';
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
+import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 const zoeBase = 'https://zoechip.org';
 
@@ -203,7 +204,7 @@ async function comboScraper(ctx: MovieScrapeContext | ShowScrapeContext): Promis
         {
           id: 'primary',
           type: 'hls' as const,
-          playlist: fileUrl,
+          playlist: createM3U8ProxyUrl(fileUrl),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -235,7 +236,7 @@ export const zoechipScraper = makeSourcerer({
   id: 'zoechip',
   name: 'ZoeChip',
   rank: 170,
-  flags: [flags.CORS_ALLOWED],
+  flags: [],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
 });
