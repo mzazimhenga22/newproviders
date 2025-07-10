@@ -6,6 +6,7 @@ import {
   streamwishLatinoScraper,
   streamwishSpanishScraper,
 } from '@/providers/embeds/streamwish';
+import { turbovidScraper } from '@/providers/embeds/turbovid';
 import { viperScraper } from '@/providers/embeds/viper';
 import { warezcdnembedMp4Scraper } from '@/providers/embeds/warezcdn/mp4';
 import { embedsuScraper } from '@/providers/sources/embedsu';
@@ -32,6 +33,7 @@ const SKIP_VALIDATION_CHECK_IDS = [
   ...cinemaosHexaEmbeds.map((e) => e.id),
   soaperTvScraper.id,
   vidsrcScraper.id,
+  turbovidScraper.id,
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
