@@ -1,7 +1,7 @@
 {
-  "name": "@movie-web/providers",
+  "name": "@p-stream/providers",
   "version": "2.3.0",
-  "description": "Package that contains all the providers of movie-web",
+  "description": "Package that contains all the providers of p-stream",
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -22,18 +22,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/movie-web/providers.git"
+    "url": "git+https://github.com/p-stream/providers.git"
   },
   "keywords": [
-    "movie-web",
+    "p-stream",
     "providers"
   ],
-  "author": "movie-web",
+  "author": "p-stream",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/movie-web/providers/issues"
+    "url": "https://github.com/p-stream/providers/issues"
   },
-  "homepage": "https://movie-web.github.io/providers/",
+  "homepage": "https://p-stream.github.io/providers/",
   "scripts": {
     "build": "vite build && tsc --noEmit",
     "cli": "vite-node ./src/dev-cli/index.ts",

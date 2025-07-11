@@ -1,4 +1,4 @@
-# @movie-web/providers
+# @p-stream/providers
 
 READ: Most sources marked with 🔥 or 🤝 are only avaliable on https://pstream.org
 
