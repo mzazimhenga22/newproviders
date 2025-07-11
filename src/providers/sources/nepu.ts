@@ -24,7 +24,7 @@ async function scrape(ctx: MovieScrapeContext | ShowScrapeContext): Promise<Sour
   return {
     stream: [
       {
-        id: 'neputo',
+        id: 'nepu',
         type: 'hls',
         playlist: response.rurl,
         flags: [flags.CORS_ALLOWED],
@@ -36,8 +36,8 @@ async function scrape(ctx: MovieScrapeContext | ShowScrapeContext): Promise<Sour
 }
 
 export const nepuScraper = makeSourcerer({
-  id: 'neputo',
-  name: 'Nepu.to',
+  id: 'nepu',
+  name: 'Nepu',
   rank: 201,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: scrape,
