@@ -77,7 +77,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const cinemaosScraper = makeSourcerer({
   id: 'cinemaos',
   name: 'CinemaOS',
-  rank: 150,
+  rank: 149,
   disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
