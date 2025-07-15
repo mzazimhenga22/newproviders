@@ -3,7 +3,7 @@ import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
 
-const baseUrl = 'https://mbp.pirxcy.dev';
+const baseUrl = 'https://mbp.pirxcy.dev'; // the dev of this api asked it to be removed. however you can host this endpoint yourself. https://github.com/HyperKiko/mbp-api
 
 function buildQualitiesFromStreams(data: {
   list: Array<{ path: string; quality: string; real_quality: string; format: string }>;
@@ -182,6 +182,7 @@ export const pirxcyScraper = makeSourcerer({
   id: 'pirxcy',
   name: 'Pirxcy',
   rank: 230,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie,
   scrapeShow,
