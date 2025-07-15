@@ -3,6 +3,7 @@ import { doodScraper } from '@/providers/embeds/dood';
 import { mixdropScraper } from '@/providers/embeds/mixdrop';
 import { turbovidScraper } from '@/providers/embeds/turbovid';
 import { upcloudScraper } from '@/providers/embeds/upcloud';
+import { vidsrcCometEmbed, vidsrcNovaEmbed, vidsrcPulsarEmbed } from '@/providers/embeds/vidsrcvip';
 import { autoembedScraper } from '@/providers/sources/autoembed';
 import { catflixScraper } from '@/providers/sources/catflix';
 import { ee3Scraper } from '@/providers/sources/ee3';
@@ -14,6 +15,7 @@ import { pirxcyScraper } from '@/providers/sources/pirxcy';
 import { tugaflixScraper } from '@/providers/sources/tugaflix';
 import { vidsrcScraper } from '@/providers/sources/vidsrc';
 import { vidsrcsuScraper } from '@/providers/sources/vidsrcsu';
+import { vidsrcvipScraper } from '@/providers/sources/vidsrcvip';
 import { zoechipScraper } from '@/providers/sources/zoechip';
 
 import {
@@ -105,6 +107,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     cinemaosScraper,
     nepuScraper,
     pirxcyScraper,
+    vidsrcvipScraper,
   ];
 }
 
@@ -151,5 +154,8 @@ export function gatherAllEmbeds(): Array<Embed> {
     streamtapeLatinoScraper,
     ...cinemaosEmbeds,
     // ...cinemaosHexaEmbeds,
+    vidsrcNovaEmbed,
+    vidsrcCometEmbed,
+    vidsrcPulsarEmbed,
   ];
 }
