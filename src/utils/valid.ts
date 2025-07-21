@@ -13,7 +13,6 @@ import { warezcdnembedMp4Scraper } from '@/providers/embeds/warezcdn/mp4';
 import { embedsuScraper } from '@/providers/sources/embedsu';
 import { nepuScraper } from '@/providers/sources/nepu';
 import { pirxcyScraper } from '@/providers/sources/pirxcy';
-import { soaperTvScraper } from '@/providers/sources/soapertv';
 import { vidsrcScraper } from '@/providers/sources/vidsrc';
 import { wecimaScraper } from '@/providers/sources/wecima';
 import { Stream } from '@/providers/streams';
@@ -34,7 +33,6 @@ const SKIP_VALIDATION_CHECK_IDS = [
   embedsuScraper.id,
   wecimaScraper.id,
   ...cinemaosHexaEmbeds.map((e) => e.id),
-  soaperTvScraper.id,
   vidsrcScraper.id,
   turbovidScraper.id,
   nepuScraper.id,
