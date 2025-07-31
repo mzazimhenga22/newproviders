@@ -31,10 +31,10 @@ export function isValidStream(stream: Stream | undefined): boolean {
 }
 
 /**
- * Check if a URL is an M3U8 proxy URL that should be validated with normal fetch
+ * Check if a URL is a proxy URL that should be validated with normal fetch
  * instead of proxiedFetcher
  */
-function isM3U8ProxyUrl(url: string): boolean {
+function isAlreadyProxyUrl(url: string): boolean {
   return url.includes('/m3u8-proxy?url=');
 }
 
@@ -49,7 +49,7 @@ export async function validatePlayableStream(
     // dirty temp fix for base64 urls to prep for fmhy poll
     if (stream.playlist.startsWith('data:')) return stream;
 
-    const useNormalFetch = isM3U8ProxyUrl(stream.playlist);
+    const useNormalFetch = isAlreadyProxyUrl(stream.playlist);
 
     let result;
     if (useNormalFetch) {
@@ -84,16 +84,38 @@ export async function validatePlayableStream(
   }
   if (stream.type === 'file') {
     const validQualitiesResults = await Promise.all(
-      Object.values(stream.qualities).map((quality) =>
-        ops.proxiedFetcher.full(quality.url, {
-          method: 'GET',
-          headers: {
-            ...stream.preferredHeaders,
-            ...stream.headers,
-            Range: 'bytes=0-1',
-          },
-        }),
-      ),
+      Object.values(stream.qualities).map(async (quality) => {
+        const useNormalFetch = isAlreadyProxyUrl(quality.url);
+
+        if (useNormalFetch) {
+          try {
+            const response = await fetch(quality.url, {
+              method: 'GET',
+              headers: {
+                ...stream.preferredHeaders,
+                ...stream.headers,
+                Range: 'bytes=0-1',
+              },
+            });
+            return {
+              statusCode: response.status,
+              body: await response.text(),
+              finalUrl: response.url,
+            };
+          } catch (error) {
+            return { statusCode: 500, body: '', finalUrl: quality.url };
+          }
+        } else {
+          return ops.proxiedFetcher.full(quality.url, {
+            method: 'GET',
+            headers: {
+              ...stream.preferredHeaders,
+              ...stream.headers,
+              Range: 'bytes=0-1',
+            },
+          });
+        }
+      }),
     );
     // remove invalid qualities from the stream
     const validQualities = stream.qualities;
