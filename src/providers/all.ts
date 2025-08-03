@@ -53,6 +53,7 @@ import {
   VidsrcsuServer8Scraper,
   VidsrcsuServer9Scraper,
 } from './embeds/vidsrcsu';
+import { vidzeeServer1Embed, vidzeeServer2Embed } from './embeds/vidzee';
 import { viperScraper } from './embeds/viper';
 import { warezcdnembedHlsScraper } from './embeds/warezcdn/hls';
 import { warezcdnembedMp4Scraper } from './embeds/warezcdn/mp4';
@@ -73,6 +74,7 @@ import { soaperTvScraper } from './sources/soapertv';
 import { streamboxScraper } from './sources/streambox';
 import { vidapiClickScraper } from './sources/vidapiclick';
 import { vidsrccxScraper } from './sources/vidsrccx';
+import { vidzeeScraper } from './sources/vidzee';
 import { warezcdnScraper } from './sources/warezcdn';
 import { wecimaScraper } from './sources/wecima';
 
@@ -110,6 +112,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     pirxcyScraper,
     vidsrcvipScraper,
     vidsrccxScraper,
+    vidzeeScraper,
   ];
 }
 
@@ -159,5 +162,7 @@ export function gatherAllEmbeds(): Array<Embed> {
     vidsrcNovaEmbed,
     vidsrcCometEmbed,
     vidsrcPulsarEmbed,
+    vidzeeServer1Embed,
+    vidzeeServer2Embed,
   ];
 }
