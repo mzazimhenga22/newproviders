@@ -27,6 +27,7 @@ import {
 } from './embeds/autoembed';
 import { cinemaosEmbeds } from './embeds/cinemaos';
 import { closeLoadScraper } from './embeds/closeload';
+import { madplayBaseEmbed, madplayNsapiEmbed } from './embeds/madplay';
 import { mp4hydraServer1Scraper, mp4hydraServer2Scraper } from './embeds/mp4hydra';
 import { ridooScraper } from './embeds/ridoo';
 import { streamtapeLatinoScraper, streamtapeScraper } from './embeds/streamtape';
@@ -63,10 +64,10 @@ import { cinemaosScraper } from './sources/cinemaos';
 import { coitusScraper } from './sources/coitus';
 import { cuevana3Scraper } from './sources/cuevana3';
 import { embedsuScraper } from './sources/embedsu';
-import { flickyScraper } from './sources/flicky';
 import { hdRezkaScraper } from './sources/hdrezka';
 import { iosmirrorScraper } from './sources/iosmirror';
 import { iosmirrorPVScraper } from './sources/iosmirrorpv';
+import { madplayScraper } from './sources/madplay';
 import { nunflixScraper } from './sources/nunflix';
 import { ridooMoviesScraper } from './sources/ridomovies';
 import { slidemoviesScraper } from './sources/slidemovies';
@@ -111,7 +112,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     pirxcyScraper,
     vidsrcvipScraper,
     vidsrccxScraper,
-    flickyScraper,
+    madplayScraper,
   ];
 }
 
@@ -161,5 +162,7 @@ export function gatherAllEmbeds(): Array<Embed> {
     vidsrcNovaEmbed,
     vidsrcCometEmbed,
     vidsrcPulsarEmbed,
+    madplayBaseEmbed,
+    madplayNsapiEmbed,
   ];
 }
