@@ -63,6 +63,7 @@ import { cinemaosScraper } from './sources/cinemaos';
 import { coitusScraper } from './sources/coitus';
 import { cuevana3Scraper } from './sources/cuevana3';
 import { embedsuScraper } from './sources/embedsu';
+import { flickyScraper } from './sources/flicky';
 import { hdRezkaScraper } from './sources/hdrezka';
 import { iosmirrorScraper } from './sources/iosmirror';
 import { iosmirrorPVScraper } from './sources/iosmirrorpv';
@@ -110,6 +111,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     pirxcyScraper,
     vidsrcvipScraper,
     vidsrccxScraper,
+    flickyScraper,
   ];
 }
 
