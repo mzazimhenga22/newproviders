@@ -26,7 +26,7 @@ export const madplayBaseEmbed = makeEmbed({
     if (type === 'movie') {
       url += `?id=${tmdbId}`;
     } else if (type === 'show') {
-      url += `?id=${tmdbId}&season=${season.number}&episode=${episode.number}`;
+      url += `?id=${tmdbId}&season=${season}&episode=${episode}`;
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
@@ -70,7 +70,7 @@ export const madplayNsapiEmbed = makeEmbed({
     if (type === 'movie') {
       url += `?id=${tmdbId}`;
     } else if (type === 'show') {
-      url += `?id=${tmdbId}&season=${season.number}&episode=${episode.number}`;
+      url += `?id=${tmdbId}&season=${season}&episode=${episode}`;
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
@@ -114,7 +114,7 @@ export const madplayRoperEmbed = makeEmbed({
     if (type === 'movie') {
       url += `?id=${tmdbId}&type=movie`;
     } else if (type === 'show') {
-      url += `?id=${tmdbId}&season=${season.number}&episode=${episode.number}&type=series`;
+      url += `?id=${tmdbId}&season=${season}&episode=${episode}&type=series`;
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
@@ -158,7 +158,7 @@ export const madplayNsapiVidFastEmbed = makeEmbed({
     if (type === 'movie') {
       url += `/movie/${tmdbId}`;
     } else if (type === 'show') {
-      url += `/tv/${tmdbId}/${season.number}/${episode.number}`;
+      url += `/tv/${tmdbId}/${season}/${episode}`;
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
