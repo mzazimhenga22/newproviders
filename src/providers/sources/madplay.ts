@@ -31,7 +31,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     {
       embedId: 'madplay-vidfast',
       url: JSON.stringify(query),
-    },                             
+    },
   ];
 
   return { embeds };

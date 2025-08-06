@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
 import { createM3U8ProxyUrl } from '@/utils/proxy';
@@ -16,7 +16,7 @@ const headers = {
 export const madplayBaseEmbed = makeEmbed({
   id: 'madplay-base',
   name: 'Flicky Base',
-  rank: 104,
+  rank: 134,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -27,11 +27,10 @@ export const madplayBaseEmbed = makeEmbed({
       url += `?id=${tmdbId}`;
     } else if (type === 'show') {
       url += `?id=${tmdbId}&season=${season.number}&episode=${episode.number}`;
-    } else {
-      throw new NotFoundError('Unsupported media type');
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
+    console.log(res);
 
     if (!Array.isArray(res) || res.length === 0) {
       throw new NotFoundError('No streams found');
@@ -61,7 +60,7 @@ export const madplayBaseEmbed = makeEmbed({
 export const madplayNsapiEmbed = makeEmbed({
   id: 'madplay-nsapi',
   name: 'Flicky Northstar',
-  rank: 103,
+  rank: 133,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -72,11 +71,10 @@ export const madplayNsapiEmbed = makeEmbed({
       url += `?id=${tmdbId}`;
     } else if (type === 'show') {
       url += `?id=${tmdbId}&season=${season.number}&episode=${episode.number}`;
-    } else {
-      throw new NotFoundError('Unsupported media type');
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
+    console.log(res);
 
     if (!Array.isArray(res) || res.length === 0) {
       throw new NotFoundError('No streams found');
@@ -106,7 +104,7 @@ export const madplayNsapiEmbed = makeEmbed({
 export const madplayRoperEmbed = makeEmbed({
   id: 'madplay-roper',
   name: 'Flicky Roper',
-  rank: 102,
+  rank: 132,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -117,11 +115,10 @@ export const madplayRoperEmbed = makeEmbed({
       url += `?id=${tmdbId}&type=movie`;
     } else if (type === 'show') {
       url += `?id=${tmdbId}&season=${season.number}&episode=${episode.number}&type=series`;
-    } else {
-      throw new NotFoundError('Unsupported media type');
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
+    console.log(res);
 
     if (!Array.isArray(res) || res.length === 0) {
       throw new NotFoundError('No streams found');
@@ -151,7 +148,7 @@ export const madplayRoperEmbed = makeEmbed({
 export const madplayNsapiVidFastEmbed = makeEmbed({
   id: 'madplay-vidfast',
   name: 'Flicky Vidfast',
-  rank: 101,
+  rank: 131,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -162,11 +159,10 @@ export const madplayNsapiVidFastEmbed = makeEmbed({
       url += `/movie/${tmdbId}`;
     } else if (type === 'show') {
       url += `/tv/${tmdbId}/${season.number}/${episode.number}`;
-    } else {
-      throw new NotFoundError('Unsupported media type');
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
+    console.log(res);
 
     if (!Array.isArray(res) || res.length === 0) {
       throw new NotFoundError('No streams found');

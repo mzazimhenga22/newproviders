@@ -27,7 +27,7 @@ import {
 } from './embeds/autoembed';
 import { cinemaosEmbeds } from './embeds/cinemaos';
 import { closeLoadScraper } from './embeds/closeload';
-import { madplayBaseEmbed, madplayNsapiEmbed } from './embeds/madplay';
+import { madplayBaseEmbed, madplayNsapiEmbed, madplayNsapiVidFastEmbed, madplayRoperEmbed } from './embeds/madplay';
 import { mp4hydraServer1Scraper, mp4hydraServer2Scraper } from './embeds/mp4hydra';
 import { ridooScraper } from './embeds/ridoo';
 import { streamtapeLatinoScraper, streamtapeScraper } from './embeds/streamtape';
@@ -164,5 +164,7 @@ export function gatherAllEmbeds(): Array<Embed> {
     vidsrcPulsarEmbed,
     madplayBaseEmbed,
     madplayNsapiEmbed,
+    madplayRoperEmbed,
+    madplayNsapiVidFastEmbed,
   ];
 }
