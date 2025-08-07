@@ -5,7 +5,7 @@ import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { EmbedOutput, makeEmbed } from '../base';
 
-const baseUrl = 'madplay.site';
+const baseUrl = 'api.vidify.top';
 const headers = {
   referer: 'https://api.vidify.top/',
   origin: 'https://player.vidify.top',
