@@ -74,7 +74,6 @@ import { slidemoviesScraper } from './sources/slidemovies';
 import { soaperTvScraper } from './sources/soapertv';
 import { streamboxScraper } from './sources/streambox';
 import { vidapiClickScraper } from './sources/vidapiclick';
-import { vidsrccxScraper } from './sources/vidsrccx';
 import { warezcdnScraper } from './sources/warezcdn';
 import { wecimaScraper } from './sources/wecima';
 
@@ -111,7 +110,6 @@ export function gatherAllSources(): Array<Sourcerer> {
     nepuScraper,
     pirxcyScraper,
     vidsrcvipScraper,
-    vidsrccxScraper,
     madplayScraper,
   ];
 }
