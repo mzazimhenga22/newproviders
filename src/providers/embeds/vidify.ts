@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
 import { createM3U8ProxyUrl } from '@/utils/proxy';
