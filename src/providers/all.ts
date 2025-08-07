@@ -40,6 +40,18 @@ import {
 } from './embeds/streamwish';
 import { vidCloudScraper } from './embeds/vidcloud';
 import {
+  vidifyAlfaEmbed,
+  vidifyBravoEmbed,
+  vidifyCharlieEmbed,
+  vidifyDeltaEmbed,
+  vidifyEchoEmbed,
+  vidifyFoxtrotEmbed,
+  vidifyGolfEmbed,
+  vidifyHotelEmbed,
+  vidifyIndiaEmbed,
+  vidifyJuliettEmbed,
+} from './embeds/vidify';
+import {
   VidsrcsuServer10Scraper,
   VidsrcsuServer11Scraper,
   VidsrcsuServer12Scraper,
@@ -75,6 +87,7 @@ import { slidemoviesScraper } from './sources/slidemovies';
 import { soaperTvScraper } from './sources/soapertv';
 import { streamboxScraper } from './sources/streambox';
 import { vidapiClickScraper } from './sources/vidapiclick';
+import { vidifyScraper } from './sources/vidify';
 import { warezcdnScraper } from './sources/warezcdn';
 import { wecimaScraper } from './sources/wecima';
 
@@ -113,6 +126,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     vidsrcvipScraper,
     madplayScraper,
     rgshowsScraper,
+    vidifyScraper,
   ];
 }
 
@@ -166,5 +180,15 @@ export function gatherAllEmbeds(): Array<Embed> {
     madplayNsapiEmbed,
     madplayRoperEmbed,
     madplayNsapiVidFastEmbed,
+    vidifyAlfaEmbed,
+    vidifyBravoEmbed,
+    vidifyCharlieEmbed,
+    vidifyDeltaEmbed,
+    vidifyEchoEmbed,
+    vidifyFoxtrotEmbed,
+    vidifyGolfEmbed,
+    vidifyHotelEmbed,
+    vidifyIndiaEmbed,
+    vidifyJuliettEmbed,
   ];
 }
