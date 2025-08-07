@@ -69,6 +69,7 @@ import { iosmirrorScraper } from './sources/iosmirror';
 import { iosmirrorPVScraper } from './sources/iosmirrorpv';
 import { madplayScraper } from './sources/madplay';
 import { nunflixScraper } from './sources/nunflix';
+import { rgshowsScraper } from './sources/rgshows';
 import { ridooMoviesScraper } from './sources/ridomovies';
 import { slidemoviesScraper } from './sources/slidemovies';
 import { soaperTvScraper } from './sources/soapertv';
@@ -111,6 +112,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     pirxcyScraper,
     vidsrcvipScraper,
     madplayScraper,
+    rgshowsScraper,
   ];
 }
 
