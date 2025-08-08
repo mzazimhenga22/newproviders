@@ -39,8 +39,8 @@ export const vidifyAlfaEmbed = makeEmbed({
     }
     const stream = res[0];
 
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    if (!stream.m3u8) {
+      throw new NotFoundError('No m3u8 URL found in stream');
     }
 
     ctx.progress(100);
