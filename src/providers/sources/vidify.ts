@@ -64,7 +64,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const vidifyScraper = makeSourcerer({
   id: 'vidify',
   name: 'Vidify',
-  rank: 184,
+  rank: 124,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
