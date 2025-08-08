@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
+import { findFirstM3U8Url } from '@/utils/m3u8';
 import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { EmbedOutput, makeEmbed } from '../base';
@@ -33,15 +34,10 @@ export const vidifyAlfaEmbed = makeEmbed({
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
-    console.log(res);
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.m3u8) {
-      throw new NotFoundError('No m3u8 URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -51,7 +47,7 @@ export const vidifyAlfaEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -80,13 +76,9 @@ export const vidifyBravoEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -96,7 +88,7 @@ export const vidifyBravoEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -125,13 +117,9 @@ export const vidifyCharlieEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -141,7 +129,7 @@ export const vidifyCharlieEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -170,13 +158,9 @@ export const vidifyDeltaEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -186,7 +170,7 @@ export const vidifyDeltaEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -215,13 +199,9 @@ export const vidifyEchoEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -231,7 +211,7 @@ export const vidifyEchoEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -260,13 +240,9 @@ export const vidifyFoxtrotEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -276,7 +252,7 @@ export const vidifyFoxtrotEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -305,13 +281,9 @@ export const vidifyGolfEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -321,7 +293,7 @@ export const vidifyGolfEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -350,13 +322,9 @@ export const vidifyHotelEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
-    }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -366,7 +334,7 @@ export const vidifyHotelEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
