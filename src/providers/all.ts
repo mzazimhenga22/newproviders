@@ -31,22 +31,7 @@ import { closeLoadScraper } from './embeds/closeload';
 import { madplayBaseEmbed, madplayNsapiEmbed, madplayNsapiVidFastEmbed, madplayRoperEmbed } from './embeds/madplay';
 import { mp4hydraServer1Scraper, mp4hydraServer2Scraper } from './embeds/mp4hydra';
 import { ridooScraper } from './embeds/ridoo';
-import {
-  rivestreamAnimezScraper,
-  rivestreamAquaScraper,
-  rivestreamAsiaCloudScraper,
-  rivestreamCurveScraper,
-  rivestreamFlowcastScraper,
-  rivestreamGuardScraper,
-  rivestreamHQScraper,
-  rivestreamHindicastScraper,
-  rivestreamHumpyScraper,
-  rivestreamLokiScraper,
-  rivestreamNinjaScraper,
-  rivestreamPrimevidsScraper,
-  rivestreamSapphireScraper,
-  rivestreamShadowScraper,
-} from './embeds/rivestream';
+import { rivestreamEmbeds } from './embeds/rivestream';
 import { streamtapeLatinoScraper, streamtapeScraper } from './embeds/streamtape';
 import { streamvidScraper } from './embeds/streamvid';
 import {
@@ -208,19 +193,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     vidifyHotelEmbed,
     vidifyIndiaEmbed,
     vidifyJuliettEmbed,
-    rivestreamFlowcastScraper,
-    rivestreamPrimevidsScraper,
-    rivestreamHumpyScraper,
-    rivestreamLokiScraper,
-    rivestreamAsiaCloudScraper,
-    rivestreamShadowScraper,
-    rivestreamHindicastScraper,
-    rivestreamAnimezScraper,
-    rivestreamSapphireScraper,
-    rivestreamAquaScraper,
-    rivestreamGuardScraper,
-    rivestreamCurveScraper,
-    rivestreamHQScraper,
-    rivestreamNinjaScraper,
+    ...rivestreamEmbeds,
   ];
 }

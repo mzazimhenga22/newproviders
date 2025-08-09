@@ -125,7 +125,7 @@ export const rivestreamScraper = makeSourcerer({
   id: 'rivestream',
   name: 'Rivestream',
   rank: 134,
-  disabled: true,
+  disabled: false,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
