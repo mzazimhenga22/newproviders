@@ -4,7 +4,7 @@ import { NotFoundError } from '@/utils/errors';
 import { findFirstM3U8Url } from '@/utils/m3u8';
 import { createM3U8ProxyUrl } from '@/utils/proxy';
 
-import { EmbedOutput, makeEmbed } from '../base'; // the ranks need changing :thumbsup:
+import { EmbedOutput, makeEmbed } from '../base';
 
 const baseUrl = 'rivestream.org';
 const headers = {
@@ -14,10 +14,10 @@ const headers = {
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 };
 
-export const rivestreamFlowcastEmbed = makeEmbed({
+export const rivestreamFlowcastScraper = makeEmbed({
   id: 'rivestream-flowcast',
   name: 'Rivestream Flowcast',
-  rank: 230,
+  rank: 424,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -25,7 +25,7 @@ export const rivestreamFlowcastEmbed = makeEmbed({
     let url = `https://${baseUrl}/`;
 
     if (type === 'movie') {
-      url += `/api/backendfetch?requestID=movieVideoProvider&id=${tmdbId}&service=flowcast&secretKey=NTUyOTk2OGE=&proxyMode=undefined`; ${tmdbId} ${season} ${episode}
+      url += `/api/backendfetch?requestID=movieVideoProvider&id=${tmdbId}&service=flowcast&secretKey=NTUyOTk2OGE=&proxyMode=undefined`;
     } else if (type === 'show') {
       url += `/api/backendfetch?requestID=tvVideoProvider&id=${tmdbId}&season=${season}&episode=${episode}&service=flowcast&secretKey=M2IyYWEwMzU=&proxyMode=undefined`;
     } else {
@@ -33,6 +33,7 @@ export const rivestreamFlowcastEmbed = makeEmbed({
     }
 
     const res = await ctx.proxiedFetcher(url, { headers });
+    console.log(res.data.sources);
 
     const playlistUrl = findFirstM3U8Url(res);
     if (!playlistUrl) {
@@ -55,10 +56,10 @@ export const rivestreamFlowcastEmbed = makeEmbed({
   },
 });
 
-export const rivestreamPrimevidsEmbed = makeEmbed({
+export const rivestreamPrimevidsScraper = makeEmbed({
   id: 'rivestream-primevids',
   name: 'Rivestream Primevids',
-  rank: 240,
+  rank: 423,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -96,10 +97,10 @@ export const rivestreamPrimevidsEmbed = makeEmbed({
   },
 });
 
-export const rivestreamHumpyEmbed = makeEmbed({
+export const rivestreamHumpyScraper = makeEmbed({
   id: 'rivestream-humpy',
   name: 'Rivestream Humpy',
-  rank: 250,
+  rank: 422,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -137,10 +138,10 @@ export const rivestreamHumpyEmbed = makeEmbed({
   },
 });
 
-export const rivestreamLokiEmbed = makeEmbed({
+export const rivestreamLokiScraper = makeEmbed({
   id: 'rivestream-loki',
   name: 'Rivestream Loki',
-  rank: 260,
+  rank: 421,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -178,10 +179,10 @@ export const rivestreamLokiEmbed = makeEmbed({
   },
 });
 
-export const rivestreamAsiaCloudEmbed = makeEmbed({
+export const rivestreamAsiaCloudScraper = makeEmbed({
   id: 'rivestream-asiacloud',
   name: 'Rivestream AsiaCloud',
-  rank: 270,
+  rank: 420,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -219,10 +220,10 @@ export const rivestreamAsiaCloudEmbed = makeEmbed({
   },
 });
 
-export const rivestreamShadowEmbed = makeEmbed({
+export const rivestreamShadowScraper = makeEmbed({
   id: 'rivestream-shadow',
   name: 'Rivestream Shadow',
-  rank: 280,
+  rank: 419,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -260,10 +261,10 @@ export const rivestreamShadowEmbed = makeEmbed({
   },
 });
 
-export const rivestreamHindicastEmbed = makeEmbed({
+export const rivestreamHindicastScraper = makeEmbed({
   id: 'rivestream-hindicast',
   name: 'Rivestream Hindicast',
-  rank: 290,
+  rank: 418,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -301,10 +302,10 @@ export const rivestreamHindicastEmbed = makeEmbed({
   },
 });
 
-export const rivestreamAnimezEmbed = makeEmbed({
+export const rivestreamAnimezScraper = makeEmbed({
   id: 'rivestream-animez',
   name: 'Rivestream Animez',
-  rank: 300,
+  rank: 417,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -342,10 +343,10 @@ export const rivestreamAnimezEmbed = makeEmbed({
   },
 });
 
-export const rivestreamSapphireEmbed = makeEmbed({
+export const rivestreamSapphireScraper = makeEmbed({
   id: 'rivestream-sapphire',
   name: 'Rivestream Sapphire',
-  rank: 310,
+  rank: 416,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -383,10 +384,10 @@ export const rivestreamSapphireEmbed = makeEmbed({
   },
 });
 
-export const rivestreamAquaEmbed = makeEmbed({
+export const rivestreamAquaScraper = makeEmbed({
   id: 'rivestream-aqua',
   name: 'Rivestream Aqua',
-  rank: 320,
+  rank: 415,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -424,10 +425,10 @@ export const rivestreamAquaEmbed = makeEmbed({
   },
 });
 
-export const rivestreamGuardEmbed = makeEmbed({
+export const rivestreamGuardScraper = makeEmbed({
   id: 'rivestream-guard',
   name: 'Rivestream Guard',
-  rank: 330,
+  rank: 414,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -465,10 +466,10 @@ export const rivestreamGuardEmbed = makeEmbed({
   },
 });
 
-export const rivestreamCurveEmbed = makeEmbed({
+export const rivestreamCurveScraper = makeEmbed({
   id: 'rivestream-curve',
   name: 'Rivestream Curve',
-  rank: 340,
+  rank: 413,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -506,10 +507,10 @@ export const rivestreamCurveEmbed = makeEmbed({
   },
 });
 
-export const rivestreamHQEmbed = makeEmbed({
+export const rivestreamHQScraper = makeEmbed({
   id: 'rivestream-hq',
   name: 'Rivestream HQ',
-  rank: 350,
+  rank: 412,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -547,10 +548,10 @@ export const rivestreamHQEmbed = makeEmbed({
   },
 });
 
-export const rivestreamNinjaEmbed = makeEmbed({
+export const rivestreamNinjaScraper = makeEmbed({
   id: 'rivestream-ninja',
   name: 'Rivestream Ninja',
-  rank: 360,
+  rank: 411,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -588,10 +589,10 @@ export const rivestreamNinjaEmbed = makeEmbed({
   },
 });
 
-export const rivestreamAlphaEmbed = makeEmbed({
+export const rivestreamAlphaScraper = makeEmbed({
   id: 'rivestream-alpha',
   name: 'Rivestream Alpha',
-  rank: 370,
+  rank: 410,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -629,10 +630,10 @@ export const rivestreamAlphaEmbed = makeEmbed({
   },
 });
 
-export const rivestreamKazeEmbed = makeEmbed({
+export const rivestreamKazeScraper = makeEmbed({
   id: 'rivestream-kaze',
   name: 'Rivestream Kaze',
-  rank: 380,
+  rank: 409,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -670,10 +671,10 @@ export const rivestreamKazeEmbed = makeEmbed({
   },
 });
 
-export const rivestreamZenesisEmbed = makeEmbed({
+export const rivestreamZenesisScraper = makeEmbed({
   id: 'rivestream-zenesis',
   name: 'Rivestream Zenesis',
-  rank: 390,
+  rank: 408,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -711,10 +712,10 @@ export const rivestreamZenesisEmbed = makeEmbed({
   },
 });
 
-export const rivestreamZenithEmbed = makeEmbed({
+export const rivestreamZenithScraper = makeEmbed({
   id: 'rivestream-zenith',
   name: 'Rivestream Zenith',
-  rank: 400,
+  rank: 407,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -752,10 +753,10 @@ export const rivestreamZenithEmbed = makeEmbed({
   },
 });
 
-export const rivestreamGhostEmbed = makeEmbed({
+export const rivestreamGhostScraper = makeEmbed({
   id: 'rivestream-ghost',
   name: 'Rivestream Ghost',
-  rank: 410,
+  rank: 406,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -793,10 +794,10 @@ export const rivestreamGhostEmbed = makeEmbed({
   },
 });
 
-export const rivestreamKinoEchoEmbed = makeEmbed({
+export const rivestreamKinoEchoScraper = makeEmbed({
   id: 'rivestream-kinoecho',
   name: 'Rivestream KinoEcho',
-  rank: 420,
+  rank: 405,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -834,10 +835,10 @@ export const rivestreamKinoEchoEmbed = makeEmbed({
   },
 });
 
-export const rivestreamEE3Embed = makeEmbed({
+export const rivestreamEE3Scraper = makeEmbed({
   id: 'rivestream-ee3',
   name: 'Rivestream EE3',
-  rank: 430,
+  rank: 404,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -875,10 +876,10 @@ export const rivestreamEE3Embed = makeEmbed({
   },
 });
 
-export const rivestreamVoltEmbed = makeEmbed({
+export const rivestreamVoltScraper = makeEmbed({
   id: 'rivestream-volt',
   name: 'Rivestream Volt',
-  rank: 440,
+  rank: 403,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -916,11 +917,10 @@ export const rivestreamVoltEmbed = makeEmbed({
   },
 });
 
-
-export const rivestreamPutafilmeEmbed = makeEmbed({
+export const rivestreamPutafilmeScraper = makeEmbed({
   id: 'rivestream-putafilme',
   name: 'Rivestream Putafilme',
-  rank: 460,
+  rank: 402,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -958,11 +958,10 @@ export const rivestreamPutafilmeEmbed = makeEmbed({
   },
 });
 
-
-export const rivestreamOphimEmbed = makeEmbed({
+export const rivestreamOphimScraper = makeEmbed({
   id: 'rivestream-ophim',
   name: 'Rivestream Ophim',
-  rank: 450,
+  rank: 401,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -1000,10 +999,10 @@ export const rivestreamOphimEmbed = makeEmbed({
   },
 });
 
-export const rivestreamKageEmbed = makeEmbed({
+export const rivestreamKageScraper = makeEmbed({
   id: 'rivestream-kage',
   name: 'Rivestream Kage',
-  rank: 460,
+  rank: 400,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
     const { type, tmdbId, season, episode } = query;
@@ -1040,7 +1039,3 @@ export const rivestreamKageEmbed = makeEmbed({
     };
   },
 });
-
-
-
-
