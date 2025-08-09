@@ -41,18 +41,7 @@ import {
   streamwishSpanishScraper,
 } from './embeds/streamwish';
 import { vidCloudScraper } from './embeds/vidcloud';
-import {
-  vidifyAlfaEmbed,
-  vidifyBravoEmbed,
-  vidifyCharlieEmbed,
-  vidifyDeltaEmbed,
-  vidifyEchoEmbed,
-  vidifyFoxtrotEmbed,
-  vidifyGolfEmbed,
-  vidifyHotelEmbed,
-  vidifyIndiaEmbed,
-  vidifyJuliettEmbed,
-} from './embeds/vidify';
+import { vidifyEmbeds } from './embeds/vidify';
 import {
   VidsrcsuServer10Scraper,
   VidsrcsuServer11Scraper,
@@ -183,16 +172,7 @@ export function gatherAllEmbeds(): Array<Embed> {
     madplayNsapiEmbed,
     madplayRoperEmbed,
     madplayNsapiVidFastEmbed,
-    vidifyAlfaEmbed,
-    vidifyBravoEmbed,
-    vidifyCharlieEmbed,
-    vidifyDeltaEmbed,
-    vidifyEchoEmbed,
-    vidifyFoxtrotEmbed,
-    vidifyGolfEmbed,
-    vidifyHotelEmbed,
-    vidifyIndiaEmbed,
-    vidifyJuliettEmbed,
+    ...vidifyEmbeds,
     ...rivestreamEmbeds,
   ];
 }
