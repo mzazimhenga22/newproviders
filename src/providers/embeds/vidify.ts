@@ -36,6 +36,11 @@ export const vidifyAlfaEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -77,6 +82,11 @@ export const vidifyBravoEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -118,6 +128,11 @@ export const vidifyCharlieEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -159,6 +174,11 @@ export const vidifyDeltaEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -200,6 +220,11 @@ export const vidifyEchoEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -241,6 +266,11 @@ export const vidifyFoxtrotEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -323,6 +353,11 @@ export const vidifyHotelEmbed = makeEmbed({
     const res = await ctx.proxiedFetcher(url, { headers });
 
     const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
+    }
     if (!playlistUrl) {
       throw new NotFoundError('No playlist URL found');
     }
@@ -363,13 +398,14 @@ export const vidifyIndiaEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
     }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -379,7 +415,7 @@ export const vidifyIndiaEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
@@ -408,13 +444,14 @@ export const vidifyJuliettEmbed = makeEmbed({
 
     const res = await ctx.proxiedFetcher(url, { headers });
 
-    if (!Array.isArray(res) || res.length === 0) {
-      throw new NotFoundError('No streams found');
+    const playlistUrl = findFirstM3U8Url(res);
+    if (playlistUrl) {
+      if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
+        throw new NotFoundError('No playlist URL found');
+      }
     }
-    const stream = res[0];
-
-    if (!stream.file) {
-      throw new NotFoundError('No file URL found in stream');
+    if (!playlistUrl) {
+      throw new NotFoundError('No playlist URL found');
     }
 
     ctx.progress(100);
@@ -424,7 +461,7 @@ export const vidifyJuliettEmbed = makeEmbed({
         {
           id: 'primary',
           type: 'hls',
-          playlist: createM3U8ProxyUrl(stream.file, headers),
+          playlist: createM3U8ProxyUrl(playlistUrl, headers),
           flags: [flags.CORS_ALLOWED],
           captions: [],
         },
