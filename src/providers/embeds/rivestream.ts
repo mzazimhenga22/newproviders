@@ -28,7 +28,7 @@ export function makeRivestreamEmbed(id: string, rank: number = 100) {
       if (type === 'movie') {
         url += `/api/backendfetch?requestID=movieVideoProvider&id=${tmdbId}&service=${id}&secretKey=NTUyOTk2OGE=&proxyMode=undefined`;
       } else if (type === 'show') {
-        url += `/api/backendfetch?requestID=tvVideoProvider&id=${tmdbId}&season=${season}&episode=${episode}&service=${id}&secretKey=M2IyYWEwMzU=&proxyMode=undefined`;
+        url += `/api/backendfetch?requestID=tvVideoProvider&id=${tmdbId}&season=${season}&episode=${episode}&service=${id}&secretKey=LTJhM2VlMDkz&proxyMode=undefined`;
       } else {
         throw new NotFoundError('Unsupported media type');
       }
@@ -130,7 +130,6 @@ export function makeRivestreamEmbed(id: string, rank: number = 100) {
 
 const RIVESTREAM_SERVERS = [
   'flowcast',
-  // 'primevids',
   'humpy',
   'loki',
   'asiacloud',
