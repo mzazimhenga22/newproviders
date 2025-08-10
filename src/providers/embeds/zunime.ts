@@ -1,70 +1,8 @@
-/* eslint-disable no-console */
-import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
-// import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { EmbedOutput, makeEmbed } from '../base';
 
-const ZUNIME_SERVERS = ['hd-2', 'miko', 'shiro', 'zaza'] as const;
-
-const M3U8_URL_REGEX = /https?:\/\/[^\s"'<>]+?\.m3u8[^\s"'<>]*/i;
-
-function extractFromString(input: string): string | null {
-  const match = input.match(M3U8_URL_REGEX);
-  return match ? match[0] : null;
-}
-
-function findFirstM3U8Url(input: unknown): string | null {
-  // eslint-disable-next-line no-console
-  console.log(input);
-  const visited = new Set<unknown>();
-
-  function dfs(node: unknown): string | null {
-    if (node == null) return null;
-    if (visited.has(node)) return null;
-    if (typeof node === 'object') visited.add(node);
-
-    if (typeof node === 'string') return extractFromString(node);
-
-    if (Array.isArray(node)) {
-      for (const element of node) {
-        const found = dfs(element);
-        if (found) return found;
-      }
-      return null;
-    }
-
-    if (typeof node === 'object') {
-      for (const value of Object.values(node as Record<string, unknown>)) {
-        if (typeof value === 'string') {
-          const foundInString = extractFromString(value);
-          if (foundInString) return foundInString;
-        } else {
-          const found = dfs(value);
-          if (found) return found;
-        }
-      }
-    }
-    return null;
-  }
-
-  return dfs(input);
-}
-
-function getFirstM3U8FromSources(sources: any): string | null {
-  if (Array.isArray(sources)) {
-    for (const source of sources) {
-      if (typeof source?.url === 'string' && source.url.includes('.m3u8')) {
-        return source.url;
-      }
-    }
-    return null;
-  }
-  if (typeof sources?.url === 'string' && sources.url.includes('.m3u8')) {
-    return sources.url;
-  }
-  return null;
-}
+const ZUNIME_SERVERS = ['hd-2', 'miko', 'shiro', 'zaza'];
 
 const baseUrl = 'https://backend.xaiby.sbs';
 const headers = {
@@ -83,9 +21,7 @@ export function makeZunimeEmbed(id: string, rank: number = 100) {
       const serverName = id as (typeof ZUNIME_SERVERS)[number];
 
       const query = JSON.parse(ctx.url);
-      const { type, malId, episode } = query;
-
-      if (type !== 'movie' && type !== 'show') throw new NotFoundError('Unsupported media type');
+      const { malId, episode } = query;
 
       const res = await ctx.proxiedFetcher(`${'/sources'}`, {
         baseUrl,
@@ -98,20 +34,15 @@ export function makeZunimeEmbed(id: string, rank: number = 100) {
         },
       });
 
-      console.log('Zunime API Response:', JSON.stringify(res, null, 2));
       const resAny: any = res as any;
 
-      const playlistUrl: string | null =
-        getFirstM3U8FromSources(resAny?.sources) ??
-        (typeof resAny?.url === 'string' && resAny.url.includes('.m3u8') ? resAny.url : null) ??
-        findFirstM3U8Url(resAny);
+      if (!resAny?.success || !resAny?.sources?.url) {
+        throw new NotFoundError('No stream URL found in response');
+      }
 
-      console.log('Extracted playlistUrl:', playlistUrl); // silly debugging heheh
-
+      const streamUrl = resAny.sources.url;
       const upstreamHeaders: Record<string, string> =
         resAny?.sources?.headers && Object.keys(resAny.sources.headers).length > 0 ? resAny.sources.headers : headers;
-
-      if (!playlistUrl) throw new NotFoundError('No playlist URL found');
 
       ctx.progress(100);
 
@@ -120,9 +51,9 @@ export function makeZunimeEmbed(id: string, rank: number = 100) {
           {
             id: 'primary',
             type: 'hls',
-            playlist: `https://proxy-2.madaraverse.online/proxy?url=${encodeURIComponent(playlistUrl)}`,
+            playlist: `https://proxy-2.madaraverse.online/proxy?url=${encodeURIComponent(streamUrl)}`,
             headers: upstreamHeaders,
-            flags: [flags.CORS_ALLOWED],
+            flags: [],
             captions: [],
           },
         ],

@@ -61,6 +61,7 @@ import { viperScraper } from './embeds/viper';
 import { warezcdnembedHlsScraper } from './embeds/warezcdn/hls';
 import { warezcdnembedMp4Scraper } from './embeds/warezcdn/mp4';
 import { warezPlayerScraper } from './embeds/warezcdn/warezplayer';
+import { zunimeEmbeds } from './embeds/zunime';
 import { EightStreamScraper } from './sources/8stream';
 import { animeflvScraper } from './sources/animeflv';
 import { cinemaosScraper } from './sources/cinemaos';
@@ -81,6 +82,7 @@ import { vidapiClickScraper } from './sources/vidapiclick';
 import { vidifyScraper } from './sources/vidify';
 import { warezcdnScraper } from './sources/warezcdn';
 import { wecimaScraper } from './sources/wecima';
+import { zunimeScraper } from './sources/zunime';
 
 export function gatherAllSources(): Array<Sourcerer> {
   // all sources are gathered here
@@ -119,6 +121,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     rgshowsScraper,
     vidifyScraper,
     rivestreamScraper,
+    zunimeScraper,
   ];
 }
 
@@ -174,5 +177,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     madplayNsapiVidFastEmbed,
     ...vidifyEmbeds,
     ...rivestreamEmbeds,
+    ...zunimeEmbeds,
   ];
 }
