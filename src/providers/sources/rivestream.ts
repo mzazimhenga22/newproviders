@@ -22,10 +22,6 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
         url: JSON.stringify(query),
       },
       {
-        embedId: 'rivestream-primevids',
-        url: JSON.stringify(query),
-      },
-      {
         embedId: 'rivestream-humpy',
         url: JSON.stringify(query),
       },
