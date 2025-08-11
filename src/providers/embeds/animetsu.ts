@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
 
 import { EmbedOutput, makeEmbed } from '../base';
