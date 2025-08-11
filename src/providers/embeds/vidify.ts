@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
-import { createM3U8ProxyUrl } from '@/utils/proxy';
+// import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { EmbedOutput, makeEmbed } from '../base';
 
 const VIDIFY_SERVERS = ['alfa', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot', 'golf', 'hotel', 'india', 'juliett'];
 
-// Do not do this. This is very lazy!
+// Do not do this. This is very lazy! what the fuck do u mean its lazy?
 const M3U8_URL_REGEX = /https?:\/\/[^\s"'<>]+?\.m3u8[^\s"'<>]*/i;
 
 function extractFromString(input: string): string | null {
@@ -23,7 +23,6 @@ function findFirstM3U8Url(input: unknown): string | null {
   function dfs(node: unknown): string | null {
     if (node == null) return null;
     if (visited.has(node)) return null;
-    // Only mark objects/arrays as visited to avoid blocking primitives
     if (typeof node === 'object') visited.add(node);
 
     if (typeof node === 'string') {
@@ -60,7 +59,7 @@ const baseUrl = 'api.vidify.top';
 const headers = {
   referer: 'https://player.vidify.top/',
   origin: 'https://player.vidify.top',
-  Authorization: 'Bearer scraper_ki_ma_ka_server',
+  Authorization: 'Bearer qwertwertrewfrgthhewghtrjrgrthrdrgtryhtew',
   'User-Agent':
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 };
@@ -88,7 +87,14 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
 
       const res = await ctx.proxiedFetcher(url, { headers });
 
-      const playlistUrl = findFirstM3U8Url(res);
+      let playlistUrl: string | null = null;
+      if (typeof res === 'object' && res !== null) {
+        // server 1 gib m3u8, others return url
+        playlistUrl = (res as any).m3u8 || (res as any).url || null;
+      }
+      if (!playlistUrl) {
+        playlistUrl = findFirstM3U8Url(res);
+      }
       if (playlistUrl) {
         if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
           throw new NotFoundError('No playlist URL found');
@@ -98,6 +104,20 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
         throw new NotFoundError('No playlist URL found');
       }
 
+      // use host if needed :YURRR:
+      const streamHeaders: Record<string, string> = { ...headers };
+
+      // add the host header if bro uses his proxy
+      if (playlistUrl.includes('proxyv1.vidify.top')) {
+        streamHeaders.Host = 'proxyv1.vidify.top';
+      } else if (playlistUrl.includes('proxyv2.vidify.top')) {
+        streamHeaders.Host = 'proxyv2.vidify.top';
+      }
+
+      // debug logs yeah yeah im stupid i know
+      console.log('Vidify API response:', res);
+      console.log('Stream request headers:', streamHeaders);
+
       ctx.progress(100);
 
       return {
@@ -105,7 +125,8 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
           {
             id: 'primary',
             type: 'hls',
-            playlist: createM3U8ProxyUrl(playlistUrl, headers),
+            playlist: playlistUrl,
+            headers: streamHeaders,
             flags: [flags.CORS_ALLOWED],
             captions: [],
           },
