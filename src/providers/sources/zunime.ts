@@ -1,16 +1,16 @@
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
+import { getAnilistIdFromMedia } from '@/utils/anilist';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
-import { getMalIdFromMedia } from '@/utils/mal';
 
 async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promise<SourcererOutput> {
-  const malId = await getMalIdFromMedia(ctx, ctx.media);
+  const anilistId = await getAnilistIdFromMedia(ctx, ctx.media);
 
   const query: any = {
     type: ctx.media.type,
     title: ctx.media.title,
     tmdbId: ctx.media.tmdbId,
     imdbId: ctx.media.imdbId,
-    malId,
+    anilistId,
     ...(ctx.media.type === 'show' && {
       season: ctx.media.season.number,
       episode: ctx.media.episode.number,
