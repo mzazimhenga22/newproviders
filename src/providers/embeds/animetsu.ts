@@ -54,14 +54,17 @@ function findFirstM3U8Url(input: unknown): string | null {
 const baseUrl = 'https://backend.animetsu.to';
 const headers = {
   referer: 'https://animetsu.to/',
-  origin: 'https://animetsu.to',
+  origin: 'https://backend.animetsu.to',
   accept: 'application/json, text/plain, */*',
   'User-Agent':
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 };
 
-// Updated helper to resolve tiddies URLs using common headers
-async function resolveTiddiesUrl(ctx, url: string, extraHeaders: Record<string, string>) {
+async function resolveTiddiesUrl(
+  ctx: { proxiedFetcher: (url: string, options?: any) => Promise<any> },
+  url: string,
+  extraHeaders: Record<string, string>,
+) {
   const jsonRes = await ctx.proxiedFetcher(url, {
     headers: {
       ...headers,
@@ -114,12 +117,25 @@ export function makeAnimetsuEmbed(id: string, rank: number = 100) {
 
       if (!playlistUrl) throw new NotFoundError('No playlist URL found');
 
-      // dont give me errors ya bitch
       if (playlistUrl.includes('tiddies.animetsu.to')) {
         playlistUrl = await resolveTiddiesUrl(ctx, playlistUrl, resAny?.sources?.headers ?? {});
       }
 
       if (!playlistUrl) throw new NotFoundError('No playlist URL found after resolving tiddies');
+
+      let streamHeaders = { ...headers };
+
+      // change headers if the url has backend.animetsu.cc bc they tried to make it harder
+      if (playlistUrl.includes('backend.animetsu.cc')) {
+        const { referer, origin, ...restHeaders } = streamHeaders;
+
+        streamHeaders = {
+          ...restHeaders,
+          Host: 'backend.animetsu.cc',
+          Origin: 'https://backend.animetsu.cc',
+          Referer: 'https://backend.animetsu.cc',
+        };
+      }
 
       ctx.progress(100);
 
@@ -129,7 +145,7 @@ export function makeAnimetsuEmbed(id: string, rank: number = 100) {
             id: 'primary',
             type: 'hls',
             playlist: playlistUrl,
-            headers,
+            headers: streamHeaders,
             flags: [flags.CORS_ALLOWED],
             captions: [],
           },
@@ -139,4 +155,4 @@ export function makeAnimetsuEmbed(id: string, rank: number = 100) {
   });
 }
 
-export const AnimetsuEmbeds = ANIMETSU_SERVERS.map((server, i) => makeAnimetsuEmbed(server, 300 - i)); // this to prob
+export const AnimetsuEmbeds = ANIMETSU_SERVERS.map((server, i) => makeAnimetsuEmbed(server, 300 - i));
