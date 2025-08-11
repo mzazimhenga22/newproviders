@@ -19,6 +19,7 @@ import { vidsrcsuScraper } from '@/providers/sources/vidsrcsu';
 import { vidsrcvipScraper } from '@/providers/sources/vidsrcvip';
 import { zoechipScraper } from '@/providers/sources/zoechip';
 
+import { AnimetsuEmbeds } from './embeds/animetsu';
 import {
   autoembedBengaliScraper,
   autoembedEnglishScraper,
@@ -64,6 +65,7 @@ import { warezPlayerScraper } from './embeds/warezcdn/warezplayer';
 import { zunimeEmbeds } from './embeds/zunime';
 import { EightStreamScraper } from './sources/8stream';
 import { animeflvScraper } from './sources/animeflv';
+import { animetsuScraper } from './sources/animetsu';
 import { cinemaosScraper } from './sources/cinemaos';
 import { coitusScraper } from './sources/coitus';
 import { cuevana3Scraper } from './sources/cuevana3';
@@ -122,6 +124,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     vidifyScraper,
     rivestreamScraper,
     zunimeScraper,
+    animetsuScraper,
   ];
 }
 
@@ -178,5 +181,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     ...vidifyEmbeds,
     ...rivestreamEmbeds,
     ...zunimeEmbeds,
+    ...AnimetsuEmbeds,
   ];
 }

@@ -48,7 +48,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
 export const animetsuScraper = makeSourcerer({
   id: 'animetsu',
   name: 'Animetsu',
-  rank: 111, // change this yeah?
+  rank: 112,
   flags: [],
   scrapeShow: comboScraper,
 });
