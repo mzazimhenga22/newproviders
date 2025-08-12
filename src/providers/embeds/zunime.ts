@@ -34,6 +34,9 @@ export function makeZunimeEmbed(id: string, rank: number = 100) {
         },
       });
 
+      // eslint-disable-next-line no-console
+      console.log(res);
+
       const resAny: any = res as any;
 
       if (!resAny?.success || !resAny?.sources?.url) {
