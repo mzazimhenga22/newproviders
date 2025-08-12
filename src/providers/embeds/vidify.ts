@@ -1,59 +1,11 @@
 /* eslint-disable no-console */
 import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
-// import { createM3U8ProxyUrl } from '@/utils/proxy';
+import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { EmbedOutput, makeEmbed } from '../base';
 
 const VIDIFY_SERVERS = ['alfa', 'bravo', 'charlie', 'delta', 'echo', 'foxtrot', 'golf', 'hotel', 'india', 'juliett'];
-
-// Do not do this. This is very lazy! what the fuck do u mean its lazy?
-const M3U8_URL_REGEX = /https?:\/\/[^\s"'<>]+?\.m3u8[^\s"'<>]*/i;
-
-function extractFromString(input: string): string | null {
-  const match = input.match(M3U8_URL_REGEX);
-  return match ? match[0] : null;
-}
-
-function findFirstM3U8Url(input: unknown): string | null {
-  // eslint-disable-next-line no-console
-  console.log(input);
-  const visited = new Set<unknown>();
-
-  function dfs(node: unknown): string | null {
-    if (node == null) return null;
-    if (visited.has(node)) return null;
-    if (typeof node === 'object') visited.add(node);
-
-    if (typeof node === 'string') {
-      return extractFromString(node);
-    }
-
-    if (Array.isArray(node)) {
-      for (const element of node) {
-        const found = dfs(element);
-        if (found) return found;
-      }
-      return null;
-    }
-
-    if (typeof node === 'object') {
-      for (const value of Object.values(node as Record<string, unknown>)) {
-        if (typeof value === 'string') {
-          const foundInString = extractFromString(value);
-          if (foundInString) return foundInString;
-        } else {
-          const found = dfs(value);
-          if (found) return found;
-        }
-      }
-    }
-
-    return null;
-  }
-
-  return dfs(input);
-}
 
 const baseUrl = 'api.vidify.top';
 const headers = {
@@ -86,15 +38,10 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
       }
 
       const res = await ctx.proxiedFetcher(url, { headers });
+      console.log(res);
 
-      let playlistUrl: string | null = null;
-      if (typeof res === 'object' && res !== null) {
-        // server 1 gib m3u8, others return url
-        playlistUrl = (res as any).m3u8 || (res as any).url || null;
-      }
-      if (!playlistUrl) {
-        playlistUrl = findFirstM3U8Url(res);
-      }
+      const playlistUrl = res.m3u8;
+
       if (playlistUrl) {
         if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
           throw new NotFoundError('No playlist URL found');
@@ -114,10 +61,6 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
         streamHeaders.Host = 'proxyv2.vidify.top';
       }
 
-      // debug logs yeah yeah im stupid i know
-      console.log('Vidify API response:', res);
-      console.log('Stream request headers:', streamHeaders);
-
       ctx.progress(100);
 
       return {
@@ -125,8 +68,7 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
           {
             id: 'primary',
             type: 'hls',
-            playlist: playlistUrl,
-            headers: streamHeaders,
+            playlist: createM3U8ProxyUrl(playlistUrl, streamHeaders),
             flags: [flags.CORS_ALLOWED],
             captions: [],
           },
