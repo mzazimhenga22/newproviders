@@ -1,14 +1,15 @@
 import { flags } from '@/entrypoint/utils/targets';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
-import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { SourcererOutput, makeSourcerer } from '../base';
 
 const baseUrl = 'api.rgshows.me';
+
 const headers = {
   referer: 'https://rgshows.me/',
   origin: 'https://rgshows.me',
+  host: baseUrl,
   'User-Agent':
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 };
@@ -23,9 +24,19 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   }
 
   const res = await ctx.proxiedFetcher(url, { headers });
-  if (!res.stream.url) {
+  if (!res?.stream?.url) {
     throw new NotFoundError('No streams found');
   }
+
+  const streamUrl = res.stream.url;
+  const streamHost = new URL(streamUrl).host;
+
+  const m3u8Headers = {
+    ...headers,
+    host: streamHost,
+    origin: 'https://www.rgshows.me',
+    referer: 'https://www.rgshows.me/',
+  };
 
   ctx.progress(100);
 
@@ -35,7 +46,8 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       {
         id: 'primary',
         type: 'hls',
-        playlist: createM3U8ProxyUrl(res.stream.url, headers),
+        playlist: streamUrl,
+        headers: m3u8Headers,
         flags: [flags.CORS_ALLOWED],
         captions: [],
       },
