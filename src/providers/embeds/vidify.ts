@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
 import { createM3U8ProxyUrl } from '@/utils/proxy';
 
@@ -44,9 +43,9 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
 
       if (Array.isArray(res.result) && res.result.length > 0) {
         const qualities: Record<string, { type: 'mp4'; url: string }> = {};
-        res.result.forEach((r) => {
+        res.result.forEach((r: { url: string | string[]; resolution: any }) => {
           if (r.url.includes('.mp4')) {
-            qualities[`${r.resolution}p`] = { type: 'mp4', url: decodeURIComponent(r.url) };
+            qualities[`${r.resolution}p`] = { type: 'mp4', url: decodeURIComponent(r.url as string) };
           }
         });
 
@@ -62,7 +61,7 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
               id: 'primary',
               type: 'file',
               qualities,
-              flags: [flags.CORS_ALLOWED],
+              flags: [],
               captions: [],
               headers: {
                 Host: 'proxy-worker.himanshu464121.workers.dev', // seems to be their only mp4 proxy
@@ -99,7 +98,7 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
             type: 'hls',
             playlist,
             headers: streamHeaders,
-            flags: [flags.CORS_ALLOWED],
+            flags: [],
             captions: [],
           },
         ],
