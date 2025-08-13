@@ -11,7 +11,7 @@ const baseUrl = 'api.vidify.top';
 const headers = {
   referer: 'https://player.vidify.top/',
   origin: 'https://player.vidify.top',
-  Authorization: 'Bearer qwertwertrewfrgthhewghtrjrgrthrdrgtryhtew',
+  Authorization: 'Bearer ,',
   'User-Agent':
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 };
@@ -40,25 +40,54 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
       const res = await ctx.proxiedFetcher(url, { headers });
       console.log(res);
 
-      const playlistUrl = res.m3u8;
+      const playlistUrl: string | undefined = res.m3u8 ?? res.url;
 
-      if (playlistUrl) {
-        if (playlistUrl.includes('https://live.adultiptv.net/rough.m3u8')) {
-          throw new NotFoundError('No playlist URL found');
+      if (Array.isArray(res.result) && res.result.length > 0) {
+        const qualities: Record<string, { type: 'mp4'; url: string }> = {};
+        res.result.forEach((r) => {
+          if (r.url.includes('.mp4')) {
+            qualities[`${r.resolution}p`] = { type: 'mp4', url: decodeURIComponent(r.url) };
+          }
+        });
+
+        if (Object.keys(qualities).length === 0) {
+          throw new NotFoundError('No MP4 streams found');
         }
-      }
-      if (!playlistUrl) {
-        throw new NotFoundError('No playlist URL found');
+
+        console.log(`Found MP4 streams: `, qualities);
+
+        return {
+          stream: [
+            {
+              id: 'primary',
+              type: 'file',
+              qualities,
+              flags: [flags.CORS_ALLOWED],
+              captions: [],
+              headers: {
+                Host: 'proxy-worker.himanshu464121.workers.dev', // seems to be their only mp4 proxy
+              },
+            },
+          ],
+        };
       }
 
-      // use host if needed :YURRR:
+      if (!playlistUrl) throw new NotFoundError('No playlist URL found');
+
       const streamHeaders: Record<string, string> = { ...headers };
+      let playlist: string;
 
-      // add the host header if bro uses his proxy
       if (playlistUrl.includes('proxyv1.vidify.top')) {
+        console.log(`Found stream (proxyv1): `, playlistUrl, streamHeaders);
         streamHeaders.Host = 'proxyv1.vidify.top';
+        playlist = decodeURIComponent(playlistUrl);
       } else if (playlistUrl.includes('proxyv2.vidify.top')) {
+        console.log(`Found stream (proxyv2): `, playlistUrl, streamHeaders);
         streamHeaders.Host = 'proxyv2.vidify.top';
+        playlist = decodeURIComponent(playlistUrl);
+      } else {
+        console.log(`Found normal stream: `, playlistUrl);
+        playlist = createM3U8ProxyUrl(decodeURIComponent(playlistUrl), streamHeaders);
       }
 
       ctx.progress(100);
@@ -68,7 +97,8 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
           {
             id: 'primary',
             type: 'hls',
-            playlist: createM3U8ProxyUrl(playlistUrl, streamHeaders),
+            playlist,
+            headers: streamHeaders,
             flags: [flags.CORS_ALLOWED],
             captions: [],
           },
