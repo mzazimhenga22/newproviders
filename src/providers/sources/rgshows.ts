@@ -1,7 +1,5 @@
-import { flags } from '@/entrypoint/utils/targets';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 import { NotFoundError } from '@/utils/errors';
-import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { SourcererOutput, makeSourcerer } from '../base';
 
@@ -52,7 +50,7 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
         type: 'hls',
         playlist: streamUrl,
         headers: m3u8Headers,
-        flags: [flags.CORS_ALLOWED],
+        flags: [],
         captions: [],
       },
     ],
@@ -63,7 +61,7 @@ export const rgshowsScraper = makeSourcerer({
   id: 'rgshows',
   name: 'RGShows',
   rank: 173,
-  flags: [flags.CORS_ALLOWED],
+  flags: [],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
 });
