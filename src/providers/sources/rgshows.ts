@@ -29,9 +29,12 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
     throw new NotFoundError('No streams found');
   }
 
+  if (res.stream.url === 'https://vidzee.wtf/playlist/69/master.m3u8') {
+    throw new NotFoundError('Found only vidzee porn stream');
+  }
+
   const streamUrl = res.stream.url;
   const streamHost = new URL(streamUrl).host;
-
   const m3u8Headers = {
     ...headers,
     host: streamHost,
@@ -47,7 +50,8 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
       {
         id: 'primary',
         type: 'hls',
-        playlist: createM3U8ProxyUrl(streamUrl, m3u8Headers),
+        playlist: streamUrl,
+        headers: m3u8Headers,
         flags: [flags.CORS_ALLOWED],
         captions: [],
       },
