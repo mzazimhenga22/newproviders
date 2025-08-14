@@ -51,7 +51,6 @@ async function getAuthHeader(ctx: any): Promise<string> {
   return cachedAuthHeader;
 }
 
-
 export function makeVidifyEmbed(id: string, rank: number = 100) {
   const serverIndex = VIDIFY_SERVERS.indexOf(id) + 1;
 
