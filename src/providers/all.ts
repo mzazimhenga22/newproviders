@@ -3,7 +3,6 @@ import { doodScraper } from '@/providers/embeds/dood';
 import { mixdropScraper } from '@/providers/embeds/mixdrop';
 import { turbovidScraper } from '@/providers/embeds/turbovid';
 import { upcloudScraper } from '@/providers/embeds/upcloud';
-import { vidsrcCometEmbed, vidsrcNovaEmbed, vidsrcPulsarEmbed } from '@/providers/embeds/vidsrcvip';
 import { autoembedScraper } from '@/providers/sources/autoembed';
 import { catflixScraper } from '@/providers/sources/catflix';
 import { ee3Scraper } from '@/providers/sources/ee3';
@@ -171,9 +170,9 @@ export function gatherAllEmbeds(): Array<Embed> {
     streamtapeLatinoScraper,
     ...cinemaosEmbeds,
     // ...cinemaosHexaEmbeds,
-    vidsrcNovaEmbed,
-    vidsrcCometEmbed,
-    vidsrcPulsarEmbed,
+    // vidsrcNovaEmbed,
+    // vidsrcCometEmbed,
+    // vidsrcPulsarEmbed,
     madplayBaseEmbed,
     madplayNsapiEmbed,
     madplayRoperEmbed,
