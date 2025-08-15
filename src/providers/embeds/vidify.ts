@@ -26,7 +26,7 @@ async function getAuthHeader(ctx: any): Promise<string> {
     },
   });
 
-  const jsFileRegex = /\/assets\/index-([a-zA-Z0-9]+)\.js/;
+  const jsFileRegex = /\/assets\/index-([a-zA-Z0-9-]+)\.js/;
   const jsFileMatch = playerPage.match(jsFileRegex);
   if (!jsFileMatch) {
     throw new Error('Could not find the JS file URL in the player page');
