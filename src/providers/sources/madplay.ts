@@ -41,6 +41,7 @@ export const madplayScraper = makeSourcerer({
   id: 'madplay',
   name: 'Flicky',
   rank: 155,
+  disabled: true,
   flags: [flags.CORS_ALLOWED],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
