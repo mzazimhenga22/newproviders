@@ -14,7 +14,6 @@ import { pirxcyScraper } from '@/providers/sources/pirxcy';
 import { rivestreamScraper } from '@/providers/sources/rivestream';
 import { tugaflixScraper } from '@/providers/sources/tugaflix';
 import { vidsrcScraper } from '@/providers/sources/vidsrc';
-import { vidsrcsuScraper } from '@/providers/sources/vidsrcsu';
 import { vidsrcvipScraper } from '@/providers/sources/vidsrcvip';
 import { zoechipScraper } from '@/providers/sources/zoechip';
 
@@ -100,7 +99,6 @@ export function gatherAllSources(): Array<Sourcerer> {
     tugaflixScraper,
     ee3Scraper,
     fsharetvScraper,
-    vidsrcsuScraper,
     vidsrcScraper,
     zoechipScraper,
     mp4hydraScraper,
