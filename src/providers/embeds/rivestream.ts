@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
-import { flags } from '@/entrypoint/utils/targets';
 import { NotFoundError } from '@/utils/errors';
-import { createM3U8ProxyUrl } from '@/utils/proxy';
 
 import { EmbedOutput, makeEmbed } from '../base';
 import { labelToLanguageCode } from '../captions';
@@ -105,7 +103,8 @@ export function makeRivestreamEmbed(id: string, rank: number = 100) {
               id: 'primary',
               type: 'file',
               qualities,
-              flags: [flags.CORS_ALLOWED],
+              headers,
+              flags: [],
               captions,
             },
           ],
@@ -118,8 +117,9 @@ export function makeRivestreamEmbed(id: string, rank: number = 100) {
           {
             id: 'primary',
             type: 'hls',
-            playlist: createM3U8ProxyUrl(firstSource.url, headers),
-            flags: [flags.CORS_ALLOWED],
+            playlist: firstSource.url,
+            headers,
+            flags: [],
             captions,
           },
         ],

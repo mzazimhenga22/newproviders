@@ -1,4 +1,3 @@
-import { flags } from '@/entrypoint/utils/targets';
 import { SourcererOutput, makeSourcerer } from '@/providers/base';
 import { MovieScrapeContext, ShowScrapeContext } from '@/utils/context';
 
@@ -122,7 +121,7 @@ export const rivestreamScraper = makeSourcerer({
   name: 'Rivestream',
   rank: 134,
   disabled: false,
-  flags: [flags.CORS_ALLOWED],
+  flags: [],
   scrapeMovie: comboScraper,
   scrapeShow: comboScraper,
 });
