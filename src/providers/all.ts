@@ -72,6 +72,7 @@ import { embedsuScraper } from './sources/embedsu';
 import { hdRezkaScraper } from './sources/hdrezka';
 import { iosmirrorScraper } from './sources/iosmirror';
 import { iosmirrorPVScraper } from './sources/iosmirrorpv';
+import { lookmovieScraper } from './sources/lookmovie';
 import { madplayScraper } from './sources/madplay';
 import { nunflixScraper } from './sources/nunflix';
 import { rgshowsScraper } from './sources/rgshows';
@@ -124,6 +125,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     rivestreamScraper,
     zunimeScraper,
     animetsuScraper,
+    lookmovieScraper,
   ];
 }
 
