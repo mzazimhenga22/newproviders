@@ -11,7 +11,6 @@ import { insertunitScraper } from '@/providers/sources/insertunit';
 import { mp4hydraScraper } from '@/providers/sources/mp4hydra';
 import { nepuScraper } from '@/providers/sources/nepu';
 import { pirxcyScraper } from '@/providers/sources/pirxcy';
-import { rivestreamScraper } from '@/providers/sources/rivestream';
 import { tugaflixScraper } from '@/providers/sources/tugaflix';
 import { vidsrcScraper } from '@/providers/sources/vidsrc';
 import { vidsrcvipScraper } from '@/providers/sources/vidsrcvip';
@@ -30,7 +29,6 @@ import { closeLoadScraper } from './embeds/closeload';
 import { madplayBaseEmbed, madplayNsapiEmbed, madplayNsapiVidFastEmbed, madplayRoperEmbed } from './embeds/madplay';
 import { mp4hydraServer1Scraper, mp4hydraServer2Scraper } from './embeds/mp4hydra';
 import { ridooScraper } from './embeds/ridoo';
-import { rivestreamEmbeds } from './embeds/rivestream';
 import { streamtapeLatinoScraper, streamtapeScraper } from './embeds/streamtape';
 import { streamvidScraper } from './embeds/streamvid';
 import {
@@ -120,7 +118,6 @@ export function gatherAllSources(): Array<Sourcerer> {
     madplayScraper,
     rgshowsScraper,
     vidifyScraper,
-    rivestreamScraper,
     zunimeScraper,
     animetsuScraper,
     lookmovieScraper,
@@ -178,7 +175,6 @@ export function gatherAllEmbeds(): Array<Embed> {
     madplayRoperEmbed,
     madplayNsapiVidFastEmbed,
     ...vidifyEmbeds,
-    ...rivestreamEmbeds,
     ...zunimeEmbeds,
     ...AnimetsuEmbeds,
   ];
