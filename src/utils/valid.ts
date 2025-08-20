@@ -1,5 +1,6 @@
 // import { alphaScraper, deltaScraper } from '@/providers/embeds/nsbx';
 // import { astraScraper, novaScraper, orionScraper } from '@/providers/embeds/whvx';
+import { bombtheirishScraper } from '@/providers/archive/sources/bombtheirish';
 import { warezcdnembedMp4Scraper } from '@/providers/embeds/warezcdn/mp4';
 import { Stream } from '@/providers/streams';
 import { IndividualEmbedRunnerOptions } from '@/runners/individualRunner';
@@ -12,6 +13,11 @@ const SKIP_VALIDATION_CHECK_IDS = [
   // novaScraper.id,
   // astraScraper.id,
   // orionScraper.id,
+];
+
+const UNPROXIED_VALIDATION_CHECK_IDS = [
+  // sources here are always proxied, so we dont need to validate with a proxy
+  bombtheirishScraper.id, // this one is dead, but i'll keep it here for now
 ];
 
 export function isValidStream(stream: Stream | undefined): boolean {
@@ -45,11 +51,13 @@ export async function validatePlayableStream(
 ): Promise<Stream | null> {
   if (SKIP_VALIDATION_CHECK_IDS.includes(sourcererId)) return stream;
 
+  const alwaysUseNormalFetch = UNPROXIED_VALIDATION_CHECK_IDS.includes(sourcererId);
+
   if (stream.type === 'hls') {
     // dirty temp fix for base64 urls to prep for fmhy poll
     if (stream.playlist.startsWith('data:')) return stream;
 
-    const useNormalFetch = isAlreadyProxyUrl(stream.playlist);
+    const useNormalFetch = alwaysUseNormalFetch || isAlreadyProxyUrl(stream.playlist);
 
     let result;
     if (useNormalFetch) {
@@ -82,10 +90,11 @@ export async function validatePlayableStream(
     if (result.statusCode < 200 || result.statusCode >= 400) return null;
     return stream;
   }
+
   if (stream.type === 'file') {
     const validQualitiesResults = await Promise.all(
       Object.values(stream.qualities).map(async (quality) => {
-        const useNormalFetch = isAlreadyProxyUrl(quality.url);
+        const useNormalFetch = alwaysUseNormalFetch || isAlreadyProxyUrl(quality.url);
 
         if (useNormalFetch) {
           try {
@@ -105,16 +114,16 @@ export async function validatePlayableStream(
           } catch (error) {
             return { statusCode: 500, body: '', finalUrl: quality.url };
           }
-        } else {
-          return ops.proxiedFetcher.full(quality.url, {
-            method: 'GET',
-            headers: {
-              ...stream.preferredHeaders,
-              ...stream.headers,
-              Range: 'bytes=0-1',
-            },
-          });
         }
+
+        return ops.proxiedFetcher.full(quality.url, {
+          method: 'GET',
+          headers: {
+            ...stream.preferredHeaders,
+            ...stream.headers,
+            Range: 'bytes=0-1',
+          },
+        });
       }),
     );
     // remove invalid qualities from the stream
@@ -128,6 +137,7 @@ export async function validatePlayableStream(
     if (Object.keys(validQualities).length === 0) return null;
     return { ...stream, qualities: validQualities };
   }
+
   return null;
 }
 
