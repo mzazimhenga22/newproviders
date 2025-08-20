@@ -4,7 +4,6 @@ import { mixdropScraper } from '@/providers/embeds/mixdrop';
 import { turbovidScraper } from '@/providers/embeds/turbovid';
 import { upcloudScraper } from '@/providers/embeds/upcloud';
 import { autoembedScraper } from '@/providers/sources/autoembed';
-import { catflixScraper } from '@/providers/sources/catflix';
 import { ee3Scraper } from '@/providers/sources/ee3';
 import { fsharetvScraper } from '@/providers/sources/fsharetv';
 import { insertunitScraper } from '@/providers/sources/insertunit';
@@ -87,7 +86,6 @@ export function gatherAllSources(): Array<Sourcerer> {
   // all sources are gathered here
   return [
     cuevana3Scraper,
-    catflixScraper,
     ridooMoviesScraper,
     hdRezkaScraper,
     warezcdnScraper,
