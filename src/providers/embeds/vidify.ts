@@ -56,7 +56,7 @@ export function makeVidifyEmbed(id: string, rank: number = 100) {
 
   return makeEmbed({
     id: `vidify-${id}`,
-    name: `Vidify ${id.charAt(0).toUpperCase() + id.slice(1)}`,
+    name: `${id.charAt(0).toUpperCase() + id.slice(1)}`,
     rank,
     async scrape(ctx): Promise<EmbedOutput> {
       const query = JSON.parse(ctx.url);

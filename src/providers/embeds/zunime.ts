@@ -15,7 +15,7 @@ const headers = {
 export function makeZunimeEmbed(id: string, rank: number = 100) {
   return makeEmbed({
     id: `zunime-${id}`,
-    name: `Zunime ${id.charAt(0).toUpperCase() + id.slice(1)}`,
+    name: `${id.charAt(0).toUpperCase() + id.slice(1)}`,
     rank,
     async scrape(ctx): Promise<EmbedOutput> {
       const serverName = id as (typeof ZUNIME_SERVERS)[number];

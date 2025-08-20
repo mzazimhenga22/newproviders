@@ -17,7 +17,7 @@ const headers = {
 export function makeAnimetsuEmbed(id: string, rank: number = 100) {
   return makeEmbed({
     id: `animetsu-${id}`,
-    name: `Animetsu ${id.charAt(0).toUpperCase() + id.slice(1)}`,
+    name: `${id.charAt(0).toUpperCase() + id.slice(1)}`,
     rank,
     async scrape(ctx): Promise<EmbedOutput> {
       const serverName = id as (typeof ANIMETSU_SERVERS)[number];

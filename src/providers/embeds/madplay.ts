@@ -15,7 +15,7 @@ const headers = {
 
 export const madplayBaseEmbed = makeEmbed({
   id: 'madplay-base',
-  name: 'Flicky Base',
+  name: 'Base',
   rank: 134,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
@@ -59,7 +59,7 @@ export const madplayBaseEmbed = makeEmbed({
 
 export const madplayNsapiEmbed = makeEmbed({
   id: 'madplay-nsapi',
-  name: 'Flicky Northstar',
+  name: 'Northstar',
   rank: 133,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
@@ -103,7 +103,7 @@ export const madplayNsapiEmbed = makeEmbed({
 
 export const madplayRoperEmbed = makeEmbed({
   id: 'madplay-roper',
-  name: 'Flicky Roper',
+  name: 'Roper',
   rank: 132,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);
@@ -147,7 +147,7 @@ export const madplayRoperEmbed = makeEmbed({
 
 export const madplayNsapiVidFastEmbed = makeEmbed({
   id: 'madplay-vidfast',
-  name: 'Flicky Vidfast',
+  name: 'Vidfast',
   rank: 131,
   async scrape(ctx): Promise<EmbedOutput> {
     const query = JSON.parse(ctx.url);

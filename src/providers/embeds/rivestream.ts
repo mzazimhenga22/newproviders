@@ -15,7 +15,7 @@ const headers = {
 export function makeRivestreamEmbed(id: string, rank: number = 100) {
   return makeEmbed({
     id: `rivestream-${id}`,
-    name: `Rivestream ${id.charAt(0).toUpperCase() + id.slice(1)}`,
+    name: `${id.charAt(0).toUpperCase() + id.slice(1)}`,
     rank,
     async scrape(ctx): Promise<EmbedOutput> {
       const query = JSON.parse(ctx.url);
