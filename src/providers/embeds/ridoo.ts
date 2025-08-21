@@ -5,6 +5,11 @@ import { makeEmbed } from '../base';
 
 const referer = 'https://ridomovies.tv/';
 
+const playlistHeaders = {
+  referer: 'https://ridoo.net/',
+  origin: 'https://ridoo.net',
+};
+
 export const ridooScraper = makeEmbed({
   id: 'ridoo',
   name: 'Ridoo',
@@ -25,6 +30,7 @@ export const ridooScraper = makeEmbed({
           id: 'primary',
           type: 'hls',
           playlist: url,
+          headers: playlistHeaders,
           captions: [],
           flags: [flags.CORS_ALLOWED],
         },
