@@ -39,6 +39,12 @@ import {
 import { vidCloudScraper } from './embeds/vidcloud';
 import { vidifyEmbeds } from './embeds/vidify';
 import {
+  vidnestAllmoviesEmbed,
+  vidnestFlixhqEmbed,
+  vidnestHollymoviehdEmbed,
+  vidnestOfficialEmbed,
+} from './embeds/vidnest';
+import {
   VidsrcsuServer10Scraper,
   VidsrcsuServer11Scraper,
   VidsrcsuServer12Scraper,
@@ -78,6 +84,7 @@ import { soaperTvScraper } from './sources/soapertv';
 import { streamboxScraper } from './sources/streambox';
 import { vidapiClickScraper } from './sources/vidapiclick';
 import { vidifyScraper } from './sources/vidify';
+import vidnestScraper from './sources/vidnest';
 import { warezcdnScraper } from './sources/warezcdn';
 import { wecimaScraper } from './sources/wecima';
 import { zunimeScraper } from './sources/zunime';
@@ -117,6 +124,7 @@ export function gatherAllSources(): Array<Sourcerer> {
     rgshowsScraper,
     vidifyScraper,
     zunimeScraper,
+    vidnestScraper,
     animetsuScraper,
     lookmovieScraper,
   ];
@@ -175,5 +183,9 @@ export function gatherAllEmbeds(): Array<Embed> {
     ...vidifyEmbeds,
     ...zunimeEmbeds,
     ...AnimetsuEmbeds,
+    vidnestHollymoviehdEmbed,
+    vidnestAllmoviesEmbed,
+    vidnestFlixhqEmbed,
+    vidnestOfficialEmbed,
   ];
 }
