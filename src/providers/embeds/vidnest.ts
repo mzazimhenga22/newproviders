@@ -45,15 +45,9 @@ export const vidnestAllmoviesEmbed = makeEmbed({
         id: `allmovies-${stream.language}`,
         type: 'hls',
         playlist: stream.url,
-        flags: [],
+        flags: [flags.CORS_ALLOWED],
         captions: [],
-        streamHeaders: stream.headers,
-        behaviorHints: {
-          proxyRequired: true,
-        },
-        meta: {
-          displayName: `AllMovies (${stream.language})`,
-        },
+        preferredHeaders: stream.headers,
       } as HlsBasedStream);
     }
 
