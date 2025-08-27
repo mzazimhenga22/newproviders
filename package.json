@@ -1,6 +1,6 @@
 {
   "name": "@mzazimhenga/providers",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Package that contains all the providers of p-stream",
   "type": "module",
   "main": "./lib/index.js",
@@ -63,6 +63,7 @@
     "@types/spinnies": "^0.5.3",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^5.0.1",
     "@vitest/coverage-v8": "^1.6.0",
     "commander": "^12.1.0",
     "cross-env": "^7.0.3",
@@ -80,8 +81,8 @@
     "spinnies": "^0.5.1",
     "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.3",
-    "vite": "^5.4.11",
+    "typescript": "^5.9.2",
+    "vite": "^5.4.19",
     "vite-node": "^1.6.0",
     "vite-plugin-dts": "^3.9.1",
     "vitest": "^1.6.0"
@@ -105,4 +106,3 @@
     "access": "public"
   }
 }
-
