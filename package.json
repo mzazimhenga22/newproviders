@@ -22,18 +22,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/p-stream/providers.git"
+    "url": "git+https://github.com/mzazimhenga/providers.git"
   },
   "keywords": [
     "p-stream",
-    "providers"
+    "providers",
+    "scraper",
+    "streaming",
+    "movies",
+    "anime"
   ],
-  "author": "p-stream",
+  "author": "Ali Mzazimhenga",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/p-stream/providers/issues"
+    "url": "https://github.com/mzazimhenga/providers/issues"
   },
-  "homepage": "https://p-stream.github.io/providers/",
+  "homepage": "https://github.com/mzazimhenga/providers#readme",
   "scripts": {
     "build": "vite build && tsc --noEmit",
     "cli": "vite-node ./src/dev-cli/index.ts",
@@ -96,5 +100,9 @@
     "set-cookie-parser": "^2.7.1",
     "unpacker": "^1.0.1"
   },
-  "packageManager": "pnpm@9.14.4"
+  "packageManager": "pnpm@9.14.4",
+  "publishConfig": {
+    "access": "public"
+  }
 }
+
