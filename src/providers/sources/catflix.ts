@@ -22,21 +22,17 @@ async function comboScraper(ctx: ShowScrapeContext | MovieScrapeContext): Promis
   const $ = load(watchPage);
 
   const scriptContent = $('script')
-    .toArray()
-    .find((script) => {
-      const child = script.children[0];
-      return (
-        child && 'type' in child && child.type === 'text' && 'data' in child && child.data.includes('main_origin =')
-      );
-    });
+  .toArray()
+  .map((el) => $(el)) // wrap each node back in Cheerio
+  .find(($el) => $el.html()?.includes('main_origin ='));
 
-  if (!scriptContent) throw new NotFoundError('No embed data found');
+if (!scriptContent) throw new NotFoundError('No embed data found');
 
-  const scriptData = scriptContent.children[0] as { data: string };
-  const mainOriginMatch = scriptData.data.match(/main_origin = "(.*?)";/);
-  if (!mainOriginMatch) throw new NotFoundError('Failed to extract embed URL');
+const scriptData = scriptContent.html()!;
+const mainOriginMatch = scriptData.match(/main_origin = "(.*?)";/);
+if (!mainOriginMatch) throw new NotFoundError('Failed to extract embed URL');
 
-  const decodedUrl = atob(mainOriginMatch[1]);
+const decodedUrl = atob(mainOriginMatch[1]);
 
   ctx.progress(90);
 

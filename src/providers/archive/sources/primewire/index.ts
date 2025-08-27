@@ -1,4 +1,6 @@
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
+
 
 import { flags } from '@/entrypoint/utils/targets';
 import { makeSourcerer } from '@/providers/base';
@@ -107,11 +109,14 @@ export const primewireScraper = makeSourcerer({
 
     const seasonPage = load(season);
 
-    const episodeLink = seasonPage(`.show_season[data-id='${ctx.media.season.number}'] > div > a`)
+    const episodeLink = seasonPage(
+      `.show_season[data-id='${ctx.media.season.number}'] > div > a`
+    )
       .toArray()
+      .map((node) => node as unknown as Element) // bridge via unknown
       .find((link) => {
-        return link.attribs.href.includes(`-episode-${ctx.media.episode.number}`);
-      })?.attribs.href;
+        return link.attribs?.href?.includes(`-episode-${ctx.media.episode.number}`);
+      })?.attribs?.href;
 
     if (!episodeLink) throw new NotFoundError('No episode links found');
 
