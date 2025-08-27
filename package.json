@@ -1,5 +1,5 @@
 {
-  "name": "@p-stream/providers",
+  "name": "@mzazimhenga/providers",
   "version": "3.1.0",
   "description": "Package that contains all the providers of p-stream",
   "type": "module",
