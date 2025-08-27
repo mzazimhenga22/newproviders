@@ -1,19 +1,58 @@
-# @p-stream/providers
+newproviders
 
-READ: Most sources marked with 🔥 or 🤝 are only avaliable on https://pstream.mov
+A custom set of providers for media streaming applications. This project extends or customizes the default provider system, enabling additional sources for content fetching.
 
-Because these scrapers are getting harder and harder to maintain, as they get patched. We need to close-source them. This is unfortunate, but it's the reality of the pirating scene. Sites that we scrape are blocking us, and we keep losing them. Fortunately, P-Stream has partnered with many people who offered their services on the site.
-You are still free to self-host; several sources are still usable, with more open-source ones coming soon. If you have experience coding, this is a great oppurtunity to develop your own scrapers. 
+Features
 
-package that holds all providers of P-Stream.
-Feel free to use for your own projects.
+✅ Plug-and-play integration with existing media platforms.
 
-features:
-- scrape popular streaming websites
-- works in both browser and server-side
+✅ Built using TypeScript for type safety.
 
-Visit documentation here: https://providers.pstream.mov/
+✅ Compatible with pnpm, npm, or yarn.
 
-## How to run locally or test my changes
+✅ Extendable and easy to configure.
 
-These topics are also covered in the documentation
+Installation
+# Using pnpm
+pnpm add newproviders
+
+# Or using npm
+npm install newproviders
+
+# Or using yarn
+yarn add newproviders
+
+Usage
+import { providers } from "newproviders";
+
+async function loadProviders() {
+  const list = await providers.getAvailableSources();
+  console.log("Available providers:", list);
+}
+
+loadProviders();
+
+Development
+
+Clone this repository and install dependencies:
+
+git clone https://github.com/mzazimhenga22/newproviders.git
+cd newproviders
+pnpm install
+
+
+Run in watch mode:
+
+pnpm dev
+
+Build
+pnpm build
+
+Author
+
+👤 Ali Mzazimhenga
+GitHub: @mzazimhenga22
+
+License
+
+MIT © 2025 Ali Mzazimhenga
